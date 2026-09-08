@@ -1,5 +1,19 @@
-import { PagePlaceholder } from "@/components/PagePlaceholder";
+import { createClient } from "@/lib/supabase/server";
+import { SermonList } from "@/components/SermonList";
 
-export default function Page() {
-  return <PagePlaceholder title="주일 설교" />;
+export default async function SundaySermonPage() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("sermons")
+    .select("*")
+    .eq("service_type", "sunday")
+    .eq("is_active", true)
+    .order("published_at", { ascending: false });
+
+  return (
+    <main className="mx-auto max-w-3xl px-4 py-16">
+      <h1 className="mb-8 text-2xl font-semibold text-gray-900">주일 설교</h1>
+      <SermonList sermons={data ?? []} />
+    </main>
+  );
 }
