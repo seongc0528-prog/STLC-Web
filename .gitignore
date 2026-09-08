@@ -37,6 +37,9 @@ yarn-error.log*
 # service account / service_role keys — never commit
 supabase/keys/
 
+# Claude Code local session state
+.claude/
+
 # vercel
 .vercel
 
