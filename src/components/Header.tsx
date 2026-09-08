@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { NAV_SECTIONS } from '@/lib/nav'
 import { NotificationOptIn } from '@/components/NotificationOptIn'
+import { AuthButtons } from '@/components/AuthButtons'
 
 export function Header() {
   return (
@@ -32,8 +33,7 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-3 text-sm">
           <NotificationOptIn />
-          <Link href="/auth/login">로그인</Link>
-          <Link href="/auth/signup">회원가입</Link>
+          <AuthButtons />
         </div>
       </div>
     </header>
