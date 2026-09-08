@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { subscribeToPush } from "@/lib/push";
+import { useIsStandalone } from "@/lib/useIsStandalone";
 
 export function NotificationOptIn() {
+  const isStandalone = useIsStandalone();
   const [userId, setUserId] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "requesting" | "enabled" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -45,7 +47,7 @@ export function NotificationOptIn() {
     }
   }
 
-  if (!userId || status === "enabled") return null;
+  if (!isStandalone || !userId || status === "enabled") return null;
 
   return (
     <div className="flex flex-col items-end gap-1">
