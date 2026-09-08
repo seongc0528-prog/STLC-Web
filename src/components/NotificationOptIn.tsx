@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { requestFcmToken } from "@/lib/firebase";
+import { subscribeToPush } from "@/lib/push";
 
 export function NotificationOptIn() {
   const [userId, setUserId] = useState<string | null>(null);
@@ -20,15 +20,22 @@ export function NotificationOptIn() {
   async function handleEnable() {
     setStatus("requesting");
     try {
-      const token = await requestFcmToken();
-      if (!token || !userId) {
+      const subscription = await subscribeToPush();
+      if (!subscription || !userId) {
         setStatus("error");
         return;
       }
       const supabase = createClient();
-      const { error } = await supabase
-        .from("push_subscriptions")
-        .upsert({ user_id: userId, fcm_token: token, device_type: "web" }, { onConflict: "user_id,fcm_token" });
+      const { error } = await supabase.from("push_subscriptions").upsert(
+        {
+          user_id: userId,
+          endpoint: subscription.endpoint,
+          p256dh: subscription.keys.p256dh,
+          auth_key: subscription.keys.auth,
+          device_type: "web",
+        },
+        { onConflict: "user_id,endpoint" },
+      );
       setStatus(error ? "error" : "enabled");
     } catch {
       setStatus("error");
