@@ -66,7 +66,10 @@ security definer
 set search_path = public
 as $$
 begin
-  if not public.is_admin() then
+  -- auth.uid() is NULL for SQL Editor / service-role connections (no end-user
+  -- JWT session) — only enforce this check for real logged-in end users,
+  -- otherwise there's no way to bootstrap the first admin account.
+  if auth.uid() is not null and not public.is_admin() then
     if new.role <> old.role or new.is_active <> old.is_active then
       raise exception 'Only admins can change role or is_active';
     end if;
