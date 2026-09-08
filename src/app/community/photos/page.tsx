@@ -1,4 +1,5 @@
 import { requireUser } from "@/lib/auth";
+import { NewAlbumForm } from "@/components/NewAlbumForm";
 
 export default async function PhotosPage() {
   const { supabase } = await requireUser();
@@ -10,8 +11,8 @@ export default async function PhotosPage() {
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-16">
-      <h1 className="mb-2 text-2xl font-semibold text-gray-900">행사 사진</h1>
-      <p className="mb-8 text-sm text-gray-500">사진 업로드 기능은 스토리지 연동 후 제공될 예정입니다.</p>
+      <h1 className="mb-8 text-2xl font-semibold text-gray-900">행사 사진</h1>
+      <NewAlbumForm />
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
         {data?.map((album) => (
           <div key={album.id} className="text-center">
