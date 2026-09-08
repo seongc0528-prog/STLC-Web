@@ -28,7 +28,12 @@ export async function subscribeToPush(): Promise<WebPushSubscription> {
     throw new Error("알림 권한이 허용되지 않았습니다.");
   }
 
-  const registration = await navigator.serviceWorker.register("/sw.js");
+  await navigator.serviceWorker.register("/sw.js");
+  // register() resolves once the registration exists, not once it's
+  // active — subscribing before activation throws "no active Service
+  // Worker". `.ready` waits for an active worker at this scope.
+  const registration = await navigator.serviceWorker.ready;
+
   const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   if (!vapidKey) throw new Error("NEXT_PUBLIC_VAPID_PUBLIC_KEY is not set");
 
