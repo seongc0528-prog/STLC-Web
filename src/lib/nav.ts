@@ -36,6 +36,7 @@ export const NAV_SECTIONS: NavSection[] = [
     label: '커뮤니티',
     labelEn: 'Community',
     items: [
+      { label: '오늘의 말씀', labelEn: 'Daily Verse', href: '/daily-verse' },
       { label: '행사 사진', labelEn: 'Photos', href: '/community/photos', requiresAuth: true },
       { label: '은혜 간증', labelEn: 'Testimony', href: '/community/testimony', requiresAuth: true },
       { label: '선교 소식', labelEn: 'Mission News', href: '/community/mission' },
