@@ -130,16 +130,7 @@ export default async function PastorPage() {
 
           {/* 이력 */}
           <div className="mt-16 space-y-14 border-t border-line pt-16">
-            <div>
-              <CareerSection title="목회 이력" titleEn="Ministry" entries={SENIOR_PASTOR.ministry} />
-              {/* 이력서의 목회 사역 설명 — 목회 이력 목록에 붙는 설명이라 여기에 둔다 */}
-              <div className="mt-8 rounded-card bg-brand-50 px-6 py-5">
-                <p className="eyebrow mb-2">Scope of Ministry</p>
-                <p className="text-sm leading-relaxed text-ink-soft">
-                  {SENIOR_PASTOR.ministryScope.ko}
-                </p>
-              </div>
-            </div>
+            <CareerSection title="목회 이력" titleEn="Ministry" entries={SENIOR_PASTOR.ministry} />
             <CareerSection title="학력" titleEn="Academic" entries={SENIOR_PASTOR.education} />
             <CareerSection title="강의 이력" titleEn="Teaching" entries={SENIOR_PASTOR.teaching} />
             <CareerSection

@@ -123,12 +123,6 @@ export const SENIOR_PASTOR = {
     },
   ] satisfies CareerEntry[],
 
-  /** 이력서의 목회 사역 설명 */
-  ministryScope: {
-    ko: '설교와 성경 교육, 기도회 인도, 성도 훈련과 상담, 심방과 목회적 돌봄, 각종 회의 주재, 교회 대표로서의 노회·총회 참석, 손님 접대',
-    en: 'Preaching, teaching the Bible, leading prayer, training church members, counselling, pastoral care, presiding over meetings, attending council meetings as a representative of the church, visiting members to give comfort, and serving guests of the church',
-  } satisfies BiText,
-
   teaching: [
     {
       period: '1981–1982',
