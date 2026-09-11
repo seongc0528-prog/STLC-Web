@@ -225,7 +225,7 @@ export default async function Home() {
         <div className="container-page">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Joyful TV</p>
+              <p className="eyebrow">Sermons</p>
               <h2 className="display rule mt-2 text-2xl md:text-3xl">최근 설교</h2>
             </div>
             <Link href="/tv/sunday" className="btn btn-outline">

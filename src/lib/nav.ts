@@ -24,8 +24,8 @@ export const NAV_SECTIONS: NavSection[] = [
     ],
   },
   {
-    label: '조이풀TV',
-    labelEn: 'Media',
+    label: '찬양과 예배',
+    labelEn: 'Worship & Praise',
     items: [
       { label: '주일 설교', labelEn: 'Sunday Sermon', href: '/tv/sunday' },
       { label: '수요 예배', labelEn: 'Wednesday Service', href: '/tv/wednesday' },
