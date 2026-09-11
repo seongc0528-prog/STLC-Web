@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Icon } from "@/components/icons";
 import { youtubeThumbnail } from "@/lib/youtube";
+import { formatChurchDate } from "@/lib/date";
 
 export type SermonListItem = {
   id: string;
@@ -59,7 +60,7 @@ export function SermonList({
 
               <div className="flex flex-1 flex-col px-6 py-6">
                 <p className="text-xs text-ink-muted">
-                  {new Date(s.published_at).toLocaleDateString("ko-KR")}
+                  {formatChurchDate(s.published_at)}
                 </p>
                 <h2 className="display mt-2 text-base text-ink">{s.title}</h2>
                 {(s.preacher || s.scripture) && (

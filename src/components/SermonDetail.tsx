@@ -5,6 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { Icon } from "@/components/icons";
 import { youtubeId } from "@/lib/youtube";
 import { scriptureSearchUrl } from "@/lib/scripture";
+import { formatChurchDate } from "@/lib/date";
 
 /**
  * 설교 전문 화면. 주일/수요 두 라우트가 공유한다.
@@ -53,7 +54,7 @@ export async function SermonDetail({
           </Link>
 
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-line pb-6 text-sm text-ink-muted">
-            <span>{new Date(sermon.published_at).toLocaleDateString("ko-KR")}</span>
+            <span>{formatChurchDate(sermon.published_at)}</span>
             {sermon.preacher && <span>{sermon.preacher}</span>}
             {sermon.scripture && (
               /* 성구 전체를 하나의 링크로 묶는다 — 브라우저가 글자 단위로 선택해
