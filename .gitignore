@@ -37,6 +37,11 @@ yarn-error.log*
 # service account / service_role keys — never commit
 supabase/keys/
 
+# 원본 문서 — 개인정보(생년월일, 자택 주소, 연락처)가 들어 있다.
+# 이 레포는 public이므로 커밋하면 영구히 공개된다.
+# 사이트에 실을 내용은 src/lib/ 아래로 옮겨 적는다.
+src/assets/docs/
+
 # Claude Code local session state
 .claude/
 
