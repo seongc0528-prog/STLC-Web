@@ -29,16 +29,29 @@ export function AuthButtons() {
 
   if (loggedIn) {
     return (
-      <button onClick={handleLogout} className="text-sm">
+      <button
+        onClick={handleLogout}
+        className="rounded-full border border-line px-4 py-1.5 text-sm text-ink-soft transition hover:border-brand-600 hover:text-brand-600"
+      >
         로그아웃
       </button>
     );
   }
 
   return (
-    <>
-      <Link href="/auth/login">로그인</Link>
-      <Link href="/auth/signup">회원가입</Link>
-    </>
+    <div className="flex items-center gap-2">
+      <Link
+        href="/auth/login"
+        className="text-sm text-ink-soft transition hover:text-brand-600"
+      >
+        로그인
+      </Link>
+      <Link
+        href="/auth/signup"
+        className="rounded-full bg-brand-600 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-brand-700"
+      >
+        회원가입
+      </Link>
+    </div>
   );
 }

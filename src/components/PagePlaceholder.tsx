@@ -1,11 +1,24 @@
-export function PagePlaceholder({ title, description }: { title: string; description?: string }) {
+import { PageHero } from '@/components/PageHero'
+import { Icon } from '@/components/icons'
+
+export function PagePlaceholder({
+  title,
+  description,
+  href,
+}: {
+  title: string
+  description?: string
+  href?: string
+}) {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-16">
-      <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
-      {description && <p className="mt-2 text-sm text-gray-500">{description}</p>}
-      <div className="mt-8 rounded border border-dashed border-gray-300 p-12 text-center text-sm text-gray-400">
-        구현 예정 (Supabase 데이터 연동 전)
+    <main>
+      <PageHero title={title} description={description} href={href} />
+      <div className="container-page py-20">
+        <div className="card flex flex-col items-center gap-4 border-dashed px-6 py-20 text-center">
+          <Icon name="cross" className="size-8 text-brand-200" />
+          <p className="text-sm text-ink-muted">구현 예정 (Supabase 데이터 연동 전)</p>
+        </div>
       </div>
-    </div>
+    </main>
   )
 }
