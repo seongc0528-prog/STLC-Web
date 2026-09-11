@@ -20,10 +20,10 @@ export async function Footer() {
             <Logomark className="size-10" />
             <span className="leading-tight">
               <span className="block font-serif text-base font-semibold text-white">
-                시드니한인교회
+                시드니 주님의 교회
               </span>
-              <span className="eyebrow eyebrow-on-dark block text-[0.5625rem]">
-                Sydney The Lord&apos;s Church
+              <span className="eyebrow eyebrow-on-dark block text-[0.5625rem] tracking-[0.16em]">
+                Sydney The Lord&apos;s Church in Australia
               </span>
             </span>
           </div>
@@ -91,7 +91,10 @@ export async function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col gap-2 py-5 text-xs text-brand-300 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Sydney The Lord&apos;s Church. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} Sydney The Lord&apos;s Church in Australia. All rights
+            reserved.
+          </p>
           <Link href="/sitemap" className="transition hover:text-white">
             사이트맵
           </Link>

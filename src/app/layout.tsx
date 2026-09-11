@@ -27,8 +27,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Sydney The Lord's Church",
-  description: "시드니한인교회 (Sydney The Lord's Church) 공식 홈페이지",
+  title: "Sydney The Lord's Church in Australia",
+  description: "시드니 주님의 교회 (Sydney The Lord's Church in Australia) 공식 홈페이지",
   manifest: "/manifest.webmanifest",
   icons: { icon: "/icon.svg", apple: "/icon.svg" },
 };

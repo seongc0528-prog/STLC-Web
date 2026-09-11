@@ -1,13 +1,13 @@
 {
   "id": "/",
-  "name": "Sydney The Lord's Church",
+  "name": "Sydney The Lord's Church in Australia",
   "short_name": "STLC",
-  "description": "시드니한인교회 (Sydney The Lord's Church)",
+  "description": "시드니 주님의 교회 (Sydney The Lord's Church in Australia)",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#111827",
+  "background_color": "#fafaf8",
+  "theme_color": "#1B5E20",
   "lang": "ko-KR",
   "icons": [
     { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },

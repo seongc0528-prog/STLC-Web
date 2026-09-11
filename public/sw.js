@@ -1,7 +1,7 @@
 self.addEventListener("push", (event) => {
   const data = event.data ? event.data.json() : {};
   event.waitUntil(
-    self.registration.showNotification(data.title || "Sydney The Lord's Church", {
+    self.registration.showNotification(data.title || "시드니 주님의 교회", {
       body: data.body,
       icon: "/icon.svg",
       // 클릭했을 때 열 경로. 데일리 말씀 푸시는 '/daily-verse' 를 보낸다.

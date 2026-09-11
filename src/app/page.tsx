@@ -63,7 +63,7 @@ export default async function Home() {
 
         <div className="container-page relative flex min-h-[clamp(30rem,72vh,42rem)] flex-col justify-center py-24 text-center">
           <p className="eyebrow eyebrow-on-dark animate-rise">
-            {new Date().getFullYear()} · Sydney The Lord&apos;s Church
+            {new Date().getFullYear()} · Sydney The Lord&apos;s Church in Australia
           </p>
 
           <h1
@@ -81,7 +81,7 @@ export default async function Home() {
           >
             누구든지 처음 오신 분도 편안하게 예배드릴 수 있는 곳,
             <br className="hidden sm:block" />
-            시드니한인교회에 오신 것을 환영합니다.
+            시드니 주님의 교회에 오신 것을 환영합니다.
           </p>
 
           <p

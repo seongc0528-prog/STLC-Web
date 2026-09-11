@@ -1,4 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#111827"/>
-  <text x="256" y="290" font-family="Georgia, serif" font-size="180" fill="#ffffff" text-anchor="middle">S</text>
+  <rect width="512" height="512" fill="#1B5E20"/>
+  <path d="M230 96h52v90h90v52h-90v178h-52V238h-90v-52h90z" fill="#ffffff" fill-opacity="0.95"/>
 </svg>

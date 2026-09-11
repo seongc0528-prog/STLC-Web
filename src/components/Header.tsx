@@ -53,10 +53,11 @@ export async function Header() {
             <Logomark className="size-10" />
             <span className="leading-tight">
               <span className="block font-serif text-base font-semibold text-ink">
-                시드니한인교회
+                시드니 주님의 교회
               </span>
-              <span className="eyebrow block text-[0.5625rem]">
-                Sydney The Lord&apos;s Church
+              {/* 영문 풀네임이 길어서 좁은 화면에서는 숨긴다 */}
+              <span className="eyebrow hidden text-[0.5625rem] tracking-[0.16em] sm:block">
+                Sydney The Lord&apos;s Church in Australia
               </span>
             </span>
           </Link>

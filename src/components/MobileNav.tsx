@@ -58,7 +58,7 @@ export function MobileNav() {
             <div className="flex items-center justify-between border-b border-line px-5 py-4">
               <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
                 <Logomark className="size-8" />
-                <span className="font-serif text-sm font-semibold">시드니한인교회</span>
+                <span className="font-serif text-sm font-semibold">시드니 주님의 교회</span>
               </Link>
               <button
                 type="button"
