@@ -1,19 +1,34 @@
 import { createClient } from "@/lib/supabase/server";
 import { SermonList } from "@/components/SermonList";
+import { PageHero } from "@/components/PageHero";
+import { Pagination, PAGE_SIZE, parsePage } from "@/components/Pagination";
 
-export default async function SundaySermonPage() {
+export default async function SundaySermonPage(props: PageProps<"/tv/sunday">) {
+  const page = parsePage((await props.searchParams).page);
   const supabase = await createClient();
-  const { data } = await supabase
+
+  const { data, count } = await supabase
     .from("sermons")
-    .select("*")
+    .select("id, title, preacher, scripture, summary, video_url, published_at", {
+      count: "exact",
+    })
     .eq("service_type", "sunday")
     .eq("is_active", true)
-    .order("published_at", { ascending: false });
+    .order("published_at", { ascending: false })
+    .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="mb-8 text-2xl font-semibold text-gray-900">주일 설교</h1>
-      <SermonList sermons={data ?? []} />
+    <main>
+      <PageHero
+        title="주일 설교"
+        href="/tv/sunday"
+        description="주일 예배에서 전한 말씀입니다. 제목을 누르면 설교 전문을 읽을 수 있습니다."
+      />
+
+      <div className="container-page py-16">
+        <SermonList sermons={data ?? []} basePath="/tv/sunday" />
+        <Pagination page={page} totalCount={count ?? 0} basePath="/tv/sunday" />
+      </div>
     </main>
   );
 }

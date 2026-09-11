@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { NAV_SECTIONS } from '@/lib/nav'
 import { createClient } from '@/lib/supabase/server'
+import { FOUNDED_LABEL } from '@/lib/church'
 import { Logomark } from '@/components/icons'
 
 export async function Footer() {
@@ -29,6 +30,10 @@ export async function Footer() {
           </div>
 
           <dl className="mt-7 space-y-2 text-sm text-brand-200">
+            <div className="flex gap-3">
+              <dt className="w-12 shrink-0 text-brand-300">창립</dt>
+              <dd className="text-brand-100">{FOUNDED_LABEL}</dd>
+            </div>
             {church?.address && (
               <div className="flex gap-3">
                 <dt className="w-12 shrink-0 text-brand-300">주소</dt>

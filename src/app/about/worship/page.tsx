@@ -8,8 +8,8 @@ export default async function WorshipPage() {
   const { data } = await supabase.from("church_info").select("*").eq("id", 1).single();
 
   const services = [
-    { label: "주일 예배", en: "Sunday Service", value: data?.sunday_service },
-    { label: "수요 예배", en: "Wednesday Service", value: data?.wednesday_service },
+    { label: "주일 예배", en: "Sunday", value: data?.sunday_service },
+    { label: "수요 예배", en: "Wednesday", value: data?.wednesday_service },
   ];
 
   return (
@@ -26,18 +26,19 @@ export default async function WorshipPage() {
             {services.map((service) => (
               <div
                 key={service.label}
-                className="card card-hover flex flex-wrap items-center justify-between gap-4 px-7 py-7"
+                className="card card-hover flex items-center justify-between gap-4 px-7 py-7"
               >
-                <div className="flex items-center gap-4">
-                  <span className="flex size-11 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+                {/* min-w-0 이 없으면 영문 라벨이 길어질 때 시간이 아래로 밀린다 */}
+                <div className="flex min-w-0 items-center gap-4">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                     <Icon name="clock" className="size-5" />
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <dt className="font-serif text-lg font-semibold text-ink">{service.label}</dt>
                     <p className="eyebrow mt-1 text-[0.5625rem]">{service.en}</p>
                   </div>
                 </div>
-                <dd className="text-base font-medium text-brand-600">
+                <dd className="shrink-0 text-base font-medium text-brand-600">
                   {service.value ?? "정보 준비 중입니다."}
                 </dd>
               </div>

@@ -2,8 +2,9 @@ import Link from "next/link";
 import { NAV_SECTIONS } from "@/lib/nav";
 import { createClient } from "@/lib/supabase/server";
 import { todayInSydney, formatKoreanDate } from "@/lib/date";
-import { youtubeThumbnail } from "@/lib/youtube";
+import { FOUNDED_YEAR } from "@/lib/church";
 import { Icon, type IconName } from "@/components/icons";
+import { SermonList } from "@/components/SermonList";
 
 const QUICK_LINKS: { icon: IconName; label: string; href: string }[] = [
   { icon: "user", label: "위임목사 소개", href: "/about/pastor" },
@@ -26,7 +27,7 @@ export default async function Home() {
       supabase.rpc("daily_verse_for", { d: date }),
       supabase
         .from("sermons")
-        .select("id, title, preacher, scripture, video_url, published_at")
+        .select("id, title, preacher, scripture, summary, video_url, published_at")
         .eq("is_active", true)
         .order("published_at", { ascending: false })
         .limit(3),
@@ -63,16 +64,16 @@ export default async function Home() {
 
         <div className="container-page relative flex min-h-[clamp(30rem,72vh,42rem)] flex-col justify-center py-24 text-center">
           <p className="eyebrow eyebrow-on-dark animate-rise">
-            {new Date().getFullYear()} · Sydney The Lord&apos;s Church in Australia
+            Since {FOUNDED_YEAR} · Sydney The Lord&apos;s Church in Australia
           </p>
 
           <h1
             style={{ animationDelay: "80ms" }}
             className="display mt-6 animate-rise text-balance text-3xl text-white sm:text-4xl md:text-5xl md:leading-[1.3]"
           >
-            주님의 교회로 부름받은 우리,
+            나눔과 섬김과 좋은 만남이 있는
             <br />
-            시드니에서 복음의 빛이 되다
+            시드니 주님의 교회입니다.
           </h1>
 
           <p
@@ -88,7 +89,7 @@ export default async function Home() {
             style={{ animationDelay: "220ms" }}
             className="mt-4 animate-rise font-serif text-xs tracking-widest text-brand-300"
           >
-            마태복음 5장 14절
+            요한복음 4장 24절
           </p>
 
           <div
@@ -139,8 +140,8 @@ export default async function Home() {
 
             <dl className="mt-8 space-y-3">
               {[
-                { label: "주일 예배", en: "Sunday Service", value: church?.sunday_service },
-                { label: "수요 예배", en: "Wednesday Service", value: church?.wednesday_service },
+                { label: "주일 예배", en: "Sunday", value: church?.sunday_service },
+                { label: "수요 예배", en: "Wednesday", value: church?.wednesday_service },
               ].map((row) => (
                 <div
                   key={row.label}
@@ -225,54 +226,9 @@ export default async function Home() {
             </Link>
           </div>
 
-          {sermons && sermons.length > 0 ? (
-            <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {sermons.map((sermon) => {
-                const thumb = youtubeThumbnail(sermon.video_url);
-                return (
-                  <li key={sermon.id}>
-                    <Link
-                      href="/tv/sunday"
-                      className="card card-hover group block h-full overflow-hidden"
-                    >
-                      <div className="relative flex aspect-video items-center justify-center bg-brand-800">
-                        {thumb ? (
-                          <img
-                            src={thumb}
-                            alt={sermon.title}
-                            className="size-full object-cover"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <Icon name="cross" className="size-10 text-brand-500" />
-                        )}
-                        <span className="absolute inset-0 bg-brand-900/0 transition group-hover:bg-brand-900/10" />
-                      </div>
-                      <div className="px-6 py-6">
-                        <p className="text-xs text-ink-muted">
-                          {new Date(sermon.published_at).toLocaleDateString("ko-KR")}
-                        </p>
-                        <h3 className="display mt-2 line-clamp-2 text-base text-ink">
-                          {sermon.title}
-                        </h3>
-                        {(sermon.preacher || sermon.scripture) && (
-                          <p className="mt-2 text-sm text-ink-muted">
-                            {sermon.preacher}
-                            {sermon.preacher && sermon.scripture && " · "}
-                            {sermon.scripture}
-                          </p>
-                        )}
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <p className="mt-10 rounded-card border border-dashed border-line px-6 py-16 text-center text-sm text-ink-muted">
-              등록된 설교 영상이 없습니다.
-            </p>
-          )}
+          <div className="mt-10">
+            <SermonList sermons={sermons ?? []} basePath="/tv/sunday" />
+          </div>
         </div>
       </section>
 
