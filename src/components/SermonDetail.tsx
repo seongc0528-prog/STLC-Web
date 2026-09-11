@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
 import { Icon } from "@/components/icons";
 import { youtubeId } from "@/lib/youtube";
+import { scriptureSearchUrl } from "@/lib/scripture";
 
 /**
  * 설교 전문 화면. 주일/수요 두 라우트가 공유한다.
@@ -55,10 +56,18 @@ export async function SermonDetail({
             <span>{new Date(sermon.published_at).toLocaleDateString("ko-KR")}</span>
             {sermon.preacher && <span>{sermon.preacher}</span>}
             {sermon.scripture && (
-              <span className="inline-flex items-center gap-1.5 text-brand-600">
-                <Icon name="book" className="size-4" />
+              /* 성구 전체를 하나의 링크로 묶는다 — 브라우저가 글자 단위로 선택해
+                 일부만 검색되는 걸 막으려면 클릭 대상이 한 덩어리여야 한다 */
+              <a
+                href={scriptureSearchUrl(sermon.scripture)}
+                target="_blank"
+                rel="noreferrer"
+                title={`"${sermon.scripture}" 검색`}
+                className="inline-flex items-center gap-1.5 whitespace-nowrap text-brand-600 underline-offset-4 transition hover:underline"
+              >
+                <Icon name="book" className="size-4 shrink-0" />
                 {sermon.scripture}
-              </span>
+              </a>
             )}
           </div>
 

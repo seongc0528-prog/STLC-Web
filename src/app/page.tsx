@@ -69,11 +69,18 @@ export default async function Home() {
 
           <h1
             style={{ animationDelay: "80ms" }}
-            className="display mt-6 animate-rise text-balance text-3xl text-white sm:text-4xl md:text-5xl md:leading-[1.3]"
+            className="display mt-6 animate-rise text-3xl text-white sm:text-4xl md:text-5xl md:leading-[1.3]"
           >
-            나눔과 섬김과 좋은 만남이 있는
+            {/* 줄바꿈을 직접 잡는다 — 자동 줄바꿈에 맡기면 좁은 화면에서
+                "나눔과 섬김과 좋 / 은 만남이 있는"처럼 단어 중간이 끊긴다.
+                sm:hidden 인 <br>은 넓은 화면에서 display:none 이라 줄을 바꾸지 않는다 */}
+            나눔과 섬김,
+            <br className="sm:hidden" />{" "}
+            좋은 만남이 있는
             <br />
-            시드니 주님의 교회입니다.
+            시드니 주님의
+            <br className="sm:hidden" />{" "}
+            교회입니다.
           </h1>
 
           <p
