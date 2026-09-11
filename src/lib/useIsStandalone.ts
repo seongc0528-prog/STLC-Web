@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useClientValue } from "./useClientValue";
+
+function getIsStandalone(): boolean {
+  const iosStandalone = (window.navigator as { standalone?: boolean }).standalone === true;
+  const mediaStandalone = window.matchMedia("(display-mode: standalone)").matches;
+  return iosStandalone || mediaStandalone;
+}
 
 /** True once the site is running as an installed PWA (standalone window),
  *  not a regular browser tab. Notifications are gated on this: it keeps
@@ -9,13 +15,6 @@ import { useEffect, useState } from "react";
  *  installed app, in-app browsers like KakaoTalk's that can't install a
  *  PWA in the first place). */
 export function useIsStandalone() {
-  const [isStandalone, setIsStandalone] = useState(false);
-
-  useEffect(() => {
-    const iosStandalone = (window.navigator as { standalone?: boolean }).standalone === true;
-    const mediaStandalone = window.matchMedia("(display-mode: standalone)").matches;
-    setIsStandalone(iosStandalone || mediaStandalone);
-  }, []);
-
-  return isStandalone;
+  // 서버에서는 알 길이 없으니 일단 '브라우저 탭' 으로 렌더한다.
+  return useClientValue(getIsStandalone, false);
 }

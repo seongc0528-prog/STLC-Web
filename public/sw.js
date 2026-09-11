@@ -3,7 +3,8 @@ self.addEventListener("push", (event) => {
   event.waitUntil(
     self.registration.showNotification(data.title || "시드니 주님의 교회", {
       body: data.body,
-      icon: "/icon.svg",
+      // 알림 아이콘도 SVG 를 못 읽는 플랫폼이 있어 PNG 로 준다.
+      icon: "/icon-192.png",
       // 클릭했을 때 열 경로. 데일리 말씀 푸시는 '/daily-verse' 를 보낸다.
       data: { url: data.url || "/" },
     }),
