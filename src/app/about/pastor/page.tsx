@@ -42,51 +42,43 @@ export default async function PastorPage() {
 
       <div className="container-page py-16 md:py-20">
         <div className="mx-auto max-w-4xl">
-          {/* 프로필 */}
-          <div className="grid gap-10 sm:grid-cols-[minmax(0,15rem)_1fr] sm:items-start">
-            <div className="overflow-hidden rounded-card border border-line bg-cream-200 shadow-card">
-              {staff?.photo_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={staff.photo_url}
-                  alt={`${position} ${name}`}
-                  className="aspect-[3/4] w-full object-cover"
-                />
-              ) : (
-                <Image
-                  src={pastorPhoto}
-                  alt={`${position} ${name}`}
-                  placeholder="blur"
-                  sizes="(min-width: 640px) 15rem, 100vw"
-                  className="aspect-[3/4] w-full object-cover"
-                  priority
-                />
-              )}
-            </div>
-
+          {/* 왼쪽: 사진 + 이름 / 오른쪽: 인사말. 너비비 1:3 */}
+          <div className="grid gap-10 sm:grid-cols-[1fr_3fr] sm:items-start">
             <div>
-              <p className="eyebrow">{positionEn}</p>
-              <h2 className="display mt-2 text-2xl text-ink md:text-3xl">
-                {name} <span className="text-base text-ink-muted">{position}</span>
-              </h2>
-              <p className="mt-1 text-sm text-ink-muted">{nameEn}</p>
-
-              <div className="mt-7 rounded-card bg-brand-50 px-6 py-5">
-                <p className="eyebrow mb-2">Ministry</p>
-                <p className="text-sm leading-relaxed text-ink-soft">
-                  {SENIOR_PASTOR.ministryScope.ko}
-                </p>
+              <div className="overflow-hidden rounded-card border border-line bg-cream-200 shadow-card">
+                {staff?.photo_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={staff.photo_url}
+                    alt={`${position} ${name}`}
+                    className="aspect-[3/4] w-full object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={pastorPhoto}
+                    alt={`${position} ${name}`}
+                    placeholder="blur"
+                    sizes="(min-width: 640px) 25vw, 100vw"
+                    className="aspect-[3/4] w-full object-cover"
+                    priority
+                  />
+                )}
               </div>
+
+              <p className="eyebrow mt-6">{positionEn}</p>
+              <h2 className="display mt-2 text-xl text-ink">
+                {name} <span className="text-sm text-ink-muted">{position}</span>
+              </h2>
+              <p className="mt-1 text-xs leading-relaxed text-ink-muted">{nameEn}</p>
             </div>
-          </div>
 
-          {/* 인사말 */}
-          <section className="mt-16 border-t border-line pt-16">
-            <p className="eyebrow">Welcome</p>
-            <h3 className="display rule mt-2 text-xl text-ink">인사말</h3>
+            {/* 인사말 */}
+            <section>
+              <p className="eyebrow">Welcome</p>
+              <h3 className="display rule mt-2 text-xl text-ink">인사말</h3>
 
-            <div className="mt-9 max-w-2xl">
-              {greetingKo.map((paragraph, i) => (
+              <div className="mt-9">
+                {greetingKo.map((paragraph, i) => (
                 <p
                   key={i}
                   className={
@@ -132,12 +124,22 @@ export default async function PastorPage() {
                   </p>
                 </div>
               </details>
-            </div>
-          </section>
+              </div>
+            </section>
+          </div>
 
           {/* 이력 */}
           <div className="mt-16 space-y-14 border-t border-line pt-16">
-            <CareerSection title="목회 이력" titleEn="Ministry" entries={SENIOR_PASTOR.ministry} />
+            <div>
+              <CareerSection title="목회 이력" titleEn="Ministry" entries={SENIOR_PASTOR.ministry} />
+              {/* 이력서의 목회 사역 설명 — 목회 이력 목록에 붙는 설명이라 여기에 둔다 */}
+              <div className="mt-8 rounded-card bg-brand-50 px-6 py-5">
+                <p className="eyebrow mb-2">Scope of Ministry</p>
+                <p className="text-sm leading-relaxed text-ink-soft">
+                  {SENIOR_PASTOR.ministryScope.ko}
+                </p>
+              </div>
+            </div>
             <CareerSection title="학력" titleEn="Academic" entries={SENIOR_PASTOR.education} />
             <CareerSection title="강의 이력" titleEn="Teaching" entries={SENIOR_PASTOR.teaching} />
             <CareerSection
