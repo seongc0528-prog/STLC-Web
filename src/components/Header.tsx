@@ -19,7 +19,7 @@ export async function Header() {
     <header className="sticky top-0 z-50">
       {/* 상단 유틸리티 바 */}
       <div className="hidden bg-brand-800 text-white md:block">
-        <div className="container-page flex h-9 items-center justify-between text-xs">
+        <div className="container-page flex h-9 items-center justify-between text-xs leading-normal">
           <p className="text-brand-200">
             {church?.sunday_service && (
               <>
@@ -51,8 +51,8 @@ export async function Header() {
         <div className="container-page flex h-18 items-center justify-between gap-6">
           <Link href="/" className="flex shrink-0 items-center gap-3">
             <Logomark className="size-10" />
-            <span className="leading-tight">
-              <span className="block font-serif text-base font-semibold text-ink">
+            <span className="leading-snug">
+              <span className="block font-serif text-base leading-normal font-semibold text-ink">
                 시드니 주님의 교회
               </span>
               {/* 영문 풀네임이 길어서 좁은 화면에서는 숨긴다 */}
@@ -65,7 +65,7 @@ export async function Header() {
           <nav className="hidden h-full items-stretch gap-1 lg:flex">
             {NAV_SECTIONS.map((section) => (
               <div key={section.label} className="group relative flex items-center">
-                <span className="cursor-default px-4 py-2 text-sm font-medium text-ink-soft transition group-hover:text-brand-600">
+                <span className="cursor-default px-4 py-2 text-sm leading-normal font-medium text-ink-soft transition group-hover:text-brand-600">
                   {section.label}
                 </span>
                 {/* 밑줄 인디케이터 */}
@@ -77,7 +77,7 @@ export async function Header() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block rounded-lg px-3 py-2 text-sm text-ink-soft transition hover:bg-brand-50 hover:text-brand-600"
+                      className="block rounded-lg px-3 py-2 text-sm leading-normal text-ink-soft transition hover:bg-brand-50 hover:text-brand-600"
                     >
                       {item.label}
                       <span className="ml-2 text-[0.625rem] tracking-wider text-ink-muted/70">
