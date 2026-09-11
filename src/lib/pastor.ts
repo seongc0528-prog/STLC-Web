@@ -141,7 +141,9 @@ export const SENIOR_PASTOR = {
       en: 'Myongji University, Seoul — Lecturer in History, Culture and Civilisation',
     },
     {
-      period: '2012–2022',
+      // 이력서 안에서 "2012–2022(10년)"과 "2012.3–2018.9"로 엇갈린다.
+      // 확인 전까지는 보수적으로 짧은 쪽을 쓴다.
+      period: '2012–2018',
       ko: 'Alphacrucis College (호주) 강사 — 교회사, 삼위일체론, 공공신학, 기독론, 신학과 대중문화, 오늘의 성경 해석, 목회 상담 등',
       en: 'Alphacrucis College, Australia — Lecturer in Church History, Trinity, Public Theology, Christology, Theology and Popular Culture, Interpreting Scripture Today, Pastoral Care and Counselling',
     },
@@ -158,8 +160,10 @@ export const SENIOR_PASTOR = {
       en: 'How Christianity can be presented in the Korean thought-forms? (English, B.Th.)',
     },
     {
-      ko: '쇠렌 키르케고르의 실존주의와 칼 바르트의 신정통주의 비교 연구 (국문, M.Div.)',
-      en: "A comparative study between Soren Kierkegaard's existentialism and Karl Barth's neo-orthodoxy (Korean, M.Div)",
+      // 'neo-authenticism'은 일반적으로 통용되는 용어가 아니지만, 논문 제목이므로
+      // 원문 그대로 둔다. 한글 줄에서도 임의로 옮기지 않는다.
+      ko: '쇠렌 키르케고르의 실존주의와 칼 바르트의 neo-authenticism 비교 연구 (국문, M.Div.)',
+      en: "A comparative study between Soren Kierkegaard's existentialism and Karl Barth's neo-authenticism (Korean, M.Div)",
     },
     {
       ko: '한국적 상황에서의 복음 선교를 위한 기독교 복음의 토착화 (영문, M.Th.)',
