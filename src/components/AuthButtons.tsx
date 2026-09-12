@@ -10,12 +10,29 @@ export function AuthButtons() {
   const router = useRouter();
 
   useEffect(() => {
+    let cancelled = false;
     const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => setLoggedIn(!!data.user));
+
+    // 조회가 실패하면 loggedIn 이 null 로 남고 이 컴포넌트는 아무것도 그리지
+    // 않는다 — 로그인 버튼이 통째로 사라져 보인다. 실패해도 '로그아웃 상태'로
+    // 확정지어서 최소한 로그인 링크는 남긴다.
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (!cancelled) setLoggedIn(!!data.session?.user);
+      })
+      .catch((err) => {
+        console.error("session lookup failed:", err);
+        if (!cancelled) setLoggedIn(false);
+      });
+
     const { data: listener } = supabase.auth.onAuthStateChange((_e, session) => {
-      setLoggedIn(!!session?.user);
+      if (!cancelled) setLoggedIn(!!session?.user);
     });
-    return () => listener.subscription.unsubscribe();
+    return () => {
+      cancelled = true;
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   async function handleLogout() {

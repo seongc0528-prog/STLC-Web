@@ -43,16 +43,41 @@ export function DrawerAccount({ onNavigate }: { onNavigate: () => void }) {
   const router = useRouter()
 
   useEffect(() => {
+    let cancelled = false
     const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => {
-      setUserId(data.user?.id ?? null)
-      setLoading(false)
-    })
+
+    // getUser()는 매번 서버를 찌른다. 설치된 앱은 지하철이나 예배당 안처럼
+    // 신호가 나쁜 곳에서 열리는 일이 잦아서, 여기서 네트워크를 기다리면 메뉴가
+    // 로딩 상태로 멈춰 선다. 로컬에 저장된 세션을 읽는 getSession()으로 먼저
+    // 그리고, 실패하더라도 finally에서 반드시 로딩을 푼다.
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (!cancelled) setUserId(data.session?.user.id ?? null)
+      })
+      .catch((err) => {
+        console.error('session lookup failed:', err)
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+
+    // 토큰 갱신 요청이 응답 없이 매달려 있으면 위 promise 는 영영 끝나지 않는다.
+    // 그 경우에도 스켈레톤이 남지 않도록 로그아웃 상태로 확정한다.
+    const timeout = setTimeout(() => {
+      if (!cancelled) setLoading(false)
+    }, 6000)
+
     const { data: listener } = supabase.auth.onAuthStateChange((_e, session) => {
+      if (cancelled) return
       setUserId(session?.user.id ?? null)
       setLoading(false)
     })
-    return () => listener.subscription.unsubscribe()
+    return () => {
+      cancelled = true
+      clearTimeout(timeout)
+      listener.subscription.unsubscribe()
+    }
   }, [])
 
   async function handleEnablePush() {
