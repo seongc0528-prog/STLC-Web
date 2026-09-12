@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { NAV_SECTIONS } from '@/lib/nav'
 import { createClient } from '@/lib/supabase/server'
 import { FOUNDED_LABEL } from '@/lib/church'
 import { Logomark } from '@/components/icons'
+import { FooterBody } from '@/components/FooterBody'
 
 export async function Footer() {
   const supabase = await createClient()
@@ -14,7 +14,7 @@ export async function Footer() {
 
   return (
     <footer className="mt-24 bg-brand-800 text-brand-100">
-      <div className="container-page grid gap-12 py-16 md:grid-cols-[1.2fr_2fr]">
+      <FooterBody>
         {/* 교회 정보 */}
         <div>
           <div className="flex items-center gap-3">
@@ -71,28 +71,7 @@ export async function Footer() {
           </Link>
         </div>
 
-        {/* 사이트맵 */}
-        <div className="grid grid-cols-2 gap-x-6 gap-y-9 sm:grid-cols-3 lg:grid-cols-5">
-          {NAV_SECTIONS.map((section) => (
-            <div key={section.label}>
-              <p className="eyebrow eyebrow-on-dark mb-3">{section.labelEn}</p>
-              <p className="mb-3 text-sm font-medium text-white">{section.label}</p>
-              <ul className="space-y-2">
-                {section.items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="text-sm text-brand-200 transition hover:text-white"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
+      </FooterBody>
 
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col gap-2 py-5 text-xs text-brand-300 sm:flex-row sm:items-center sm:justify-between">
