@@ -140,8 +140,12 @@ export function DrawerAccount({ onNavigate }: { onNavigate: () => void }) {
             </Link>
           </li>
 
-          <li className="border-b border-[#e6dfcc]">
-            {isStandalone ? (
+          {/* 설치된 앱에서만 내놓는다. 브라우저 탭에서는 iOS 가 웹 푸시를 아예
+              지원하지 않아서, 눌러도 설치 안내로 되돌려 보내는 것 말고는 할 수
+              있는 게 없다 — 그럴 바에는 메뉴에 없는 편이 덜 헷갈린다. 설치를
+              권하는 일은 바로 위 '앱 설치 안내' 가 맡는다. */}
+          {isStandalone && (
+            <li className="border-b border-[#e6dfcc]">
               <button
                 type="button"
                 onClick={handleEnablePush}
@@ -164,18 +168,8 @@ export function DrawerAccount({ onNavigate }: { onNavigate: () => void }) {
                         : '켜기'}
                 </span>
               </button>
-            ) : (
-              // 브라우저 탭에서는 웹 푸시를 켜봐야 iOS 에서 동작하지 않는다.
-              // 설치 안내로 보내는 편이 정직하다.
-              <Link href="/install" onClick={onNavigate} className={`${rowClass} text-ink-soft`}>
-                <span>
-                  알림 설정
-                  <span className="ml-2 text-xs text-ink-muted">앱 설치 후 가능</span>
-                </span>
-                <Chevron />
-              </Link>
-            )}
-          </li>
+            </li>
+          )}
 
           {pushError && (
             <li className="border-b border-[#e6dfcc] px-5 py-2 text-xs leading-relaxed text-red-600">
