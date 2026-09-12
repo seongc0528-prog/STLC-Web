@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { NAV_SECTIONS } from "@/lib/nav";
 import { createClient } from "@/lib/supabase/server";
 import { todayInSydney, formatKoreanDate } from "@/lib/date";
 import { FOUNDED_YEAR } from "@/lib/church";
@@ -308,34 +307,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ================= 전체 메뉴 ================= */}
-      <section className="container-page py-20 md:py-24">
-        <p className="eyebrow">Sitemap</p>
-        <h2 className="display rule mt-2 text-2xl md:text-3xl">전체 메뉴</h2>
-
-        <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
-          {NAV_SECTIONS.map((section) => (
-            <div key={section.label}>
-              <p className="eyebrow mb-2">{section.labelEn}</p>
-              <h3 className="mb-4 border-b border-line pb-3 font-serif text-base font-semibold text-ink">
-                {section.label}
-              </h3>
-              <ul className="space-y-2.5">
-                {section.items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="text-sm text-ink-muted transition hover:text-brand-600"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* 전체 메뉴 그리드는 바로 아래 푸터가 같은 내용을 그대로 들고 있어서 뺐다.
+          전 페이지에 깔리는 푸터 쪽을 단일 출처로 삼는다. */}
     </main>
   );
 }
