@@ -6,7 +6,7 @@
 export type IconName = keyof typeof ICON_PATHS
 
 const ICON_PATHS = {
-  // 위임목사 / 사람
+  // 담임목사 / 사람
   user: (
     <>
       <path d="M20 21a8 8 0 1 0-16 0" />

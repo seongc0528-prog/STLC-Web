@@ -16,7 +16,7 @@ export const NAV_SECTIONS: NavSection[] = [
     label: '교회 소개',
     labelEn: 'About',
     items: [
-      { label: '위임목사 소개', labelEn: 'Senior Pastor', href: '/about/pastor' },
+      { label: '담임목사 소개', labelEn: 'Senior Pastor', href: '/about/pastor' },
       { label: '섬기는 사람들', labelEn: 'Our Staff', href: '/about/staff' },
       { label: '예배 안내', labelEn: 'Worship Info', href: '/about/worship' },
       { label: '교회 연혁', labelEn: 'History', href: '/about/history' },

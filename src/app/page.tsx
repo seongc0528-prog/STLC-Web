@@ -7,7 +7,7 @@ import { Icon, type IconName } from "@/components/icons";
 import { SermonList } from "@/components/SermonList";
 
 const QUICK_LINKS: { icon: IconName; label: string; href: string }[] = [
-  { icon: "user", label: "위임목사 소개", href: "/about/pastor" },
+  { icon: "user", label: "담임목사 소개", href: "/about/pastor" },
   { icon: "clock", label: "예배 안내", href: "/about/worship" },
   { icon: "play", label: "주일 설교", href: "/tv/sunday" },
   { icon: "music", label: "찬양", href: "/tv/praise" },

@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
 import { Icon } from "@/components/icons";
 import { SENIOR_PASTOR, type CareerEntry } from "@/lib/pastor";
-import pastorPhoto from "@/assets/images/위임목사.jpg";
+import pastorPhoto from "@/assets/images/담임목사.jpg";
 
 /** 빈 줄로 나뉜 본문을 문단 배열로. DB의 bio를 인사말로 쓸 때 사용한다. */
 function toParagraphs(text: string | null | undefined) {
@@ -17,7 +17,7 @@ function toParagraphs(text: string | null | undefined) {
 
 /**
  * 이력은 `src/lib/pastor.ts`(이력서 원본 기준)를 쓰되,
- * 관리자가 staff 테이블에 위임목사 행을 넣으면 이름/직분/사진/인사말은 그쪽을 우선한다.
+ * 관리자가 staff 테이블에 담임목사 행을 넣으면 이름/직분/사진/인사말은 그쪽을 우선한다.
  */
 export default async function PastorPage() {
   const supabase = await createClient();
@@ -38,7 +38,7 @@ export default async function PastorPage() {
 
   return (
     <main>
-      <PageHero title="위임목사 소개" href="/about/pastor" />
+      <PageHero title="담임목사 소개" href="/about/pastor" />
 
       <div className="container-page py-16 md:py-20">
         <div className="mx-auto max-w-4xl">
@@ -92,7 +92,9 @@ export default async function PastorPage() {
               ))}
 
               <p className="mt-10 font-serif text-sm text-ink">
-                시드니 주님의 교회 위임목사{" "}
+                {/* 직분은 staff 행이 있으면 그 값을 따른다 — 여기만 글자를 박아두면
+                    관리자가 DB에서 바꿨을 때 위쪽 이름 옆 직분과 어긋난다. */}
+                시드니 주님의 교회 {position}{" "}
                 <span className="font-semibold">{name}</span>
               </p>
 

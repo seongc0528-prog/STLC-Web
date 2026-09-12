@@ -1,5 +1,5 @@
 /**
- * 위임목사 이력 — `src/assets/docs/류성춘 목사 이력서.docx`(2025-05-13) 기준.
+ * 담임목사 이력 — `src/assets/docs/류성춘 목사 이력서.docx`(2025-05-13) 기준.
  *
  * 사이트에 한/영 전환 기능이 아직 없어서, 지금은 ko를 본문으로 en을 보조로 함께 띄운다.
  * 나중에 토글이 생기면 같은 데이터에서 한쪽만 고르면 된다.
@@ -22,7 +22,7 @@ export const SENIOR_PASTOR = {
   name: { ko: '류성춘', en: 'Seong Choon Lew' } satisfies BiText,
   /** 영문 경칭 — 목사이자 신학박사 */
   honorific: 'Rev. Dr.',
-  position: { ko: '위임목사', en: 'Senior Pastor' } satisfies BiText,
+  position: { ko: '담임목사', en: 'Senior Pastor' } satisfies BiText,
 
   /**
    * 인사말 — **목사님 확인 전 초안**.
