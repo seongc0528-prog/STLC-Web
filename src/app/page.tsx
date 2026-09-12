@@ -274,33 +274,28 @@ export default async function Home() {
         </section>
       )}
 
-      {/* ================= 처음 오셨나요 CTA ================= */}
-      <section className="relative overflow-hidden bg-brand-600">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-60"
-          style={{
-            background:
-              "radial-gradient(35rem 25rem at 85% 0%, #2e7d32 0%, transparent 65%)",
-          }}
-        />
-        <div className="container-page relative flex flex-col items-center py-20 text-center md:py-24">
-          <Icon name="cross" className="size-8 text-brand-300" />
-          <h2 className="display rule rule-center mt-6 text-2xl text-white md:text-3xl">
+      {/* ================= 처음 오셨나요 CTA =================
+          딥그린 밴드였으나 바로 아래 푸터도 딥그린이라 어두운 초록이 연달아 겹쳤다.
+          위쪽 예배 안내·오늘의 말씀과 같은 밝은 계열로 맞추고, 옅은 브랜드 틴트로만
+          앞 섹션(흰색)과 구분한다. */}
+      <section className="border-t border-line bg-brand-50">
+        <div className="container-page flex flex-col items-center py-20 text-center md:py-24">
+          <span className="flex size-14 items-center justify-center rounded-full bg-white text-brand-600 shadow-soft">
+            <Icon name="cross" className="size-7" />
+          </span>
+          <p className="eyebrow mt-6">Welcome</p>
+          <h2 className="display rule rule-center mt-2 text-2xl text-ink md:text-3xl">
             처음 오셨나요?
           </h2>
-          <p className="mt-6 max-w-lg text-sm leading-relaxed text-brand-100">
+          <p className="mt-6 max-w-lg text-sm leading-relaxed text-ink-muted">
             새가족으로 등록하시면 교회 생활 전반을 안내해 드립니다.
             예배·교육·공동체에 대해 궁금한 점은 언제든 문의해 주세요.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/auth/signup"
-              className="btn bg-white text-brand-700 hover:bg-brand-50"
-            >
+            <Link href="/auth/signup" className="btn btn-primary">
               회원가입
             </Link>
-            <Link href="/about/location" className="btn btn-ghost-light">
+            <Link href="/about/location" className="btn btn-outline">
               오시는 길
             </Link>
           </div>

@@ -15,8 +15,8 @@ export function FooterBody({ children }: { children: React.ReactNode }) {
   // 사이트맵 페이지는 본문이 이미 같은 목록이라 메뉴 쪽을 접는다.
   const showNav = pathname !== '/sitemap'
 
-  // 홈은 마지막 섹션이 초록 CTA 밴드다. 여기에 위 여백을 두면 초록과 초록 사이에
-  // 크림색 띠가 끼어 이음매처럼 보이므로 홈에서만 붙인다.
+  // 홈은 마지막이 화면 전체를 채우는 CTA 밴드다. 위 여백을 두면 밴드와 푸터 사이에
+  // 크림색 띠가 끼어 잘린 것처럼 보이므로 홈에서만 붙인다.
   const flush = pathname === '/'
 
   return (
