@@ -100,9 +100,14 @@ export async function Footer() {
             © {new Date().getFullYear()} Sydney The Lord&apos;s Church in Australia. All rights
             reserved.
           </p>
-          <Link href="/sitemap" className="transition hover:text-white">
-            사이트맵
-          </Link>
+          <span className="flex items-center gap-4">
+            <Link href="/install" className="transition hover:text-white">
+              앱 설치 안내
+            </Link>
+            <Link href="/sitemap" className="transition hover:text-white">
+              사이트맵
+            </Link>
+          </span>
         </div>
       </div>
     </footer>

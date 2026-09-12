@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { consumeInstallPrompt, useInstallPromptEvent } from "@/lib/installPrompt";
 import { getPlatform, inAppBrowserName, openExternalUrl, SERVER_PLATFORM } from "@/lib/platform";
 import { useClientValue } from "@/lib/useClientValue";
@@ -108,6 +109,11 @@ export function InstallPrompt() {
             홈 화면에 추가하면 앱처럼 쓰고 알림도 받을 수 있어요. 아래 <ShareIcon /> 공유 버튼을
             누른 뒤 <b className="font-medium">&lsquo;홈 화면에 추가&rsquo;</b>를 선택하세요.
           </span>
+        }
+        action={
+          <Link href="/install" className={buttonClass}>
+            그림으로 보기
+          </Link>
         }
       />
     );

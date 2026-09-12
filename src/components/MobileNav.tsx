@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { NAV_SECTIONS } from '@/lib/nav'
-import { AuthButtons } from '@/components/AuthButtons'
-import { NotificationOptIn } from '@/components/NotificationOptIn'
+import { DrawerAccount } from '@/components/DrawerAccount'
 import { Logomark } from '@/components/icons'
 
 export function MobileNav() {
@@ -91,7 +90,9 @@ export function MobileNav() {
             </button>
           </div>
 
-          <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+          <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)]">
+            <DrawerAccount onNavigate={() => setOpen(false)} />
+
             {NAV_SECTIONS.map((section) => (
               <div key={section.label}>
                 {/* 섹션 헤더 — 골드 룰로 구분해 초록 배경 위에서도 끊겨 보이지 않는다. */}
@@ -141,15 +142,6 @@ export function MobileNav() {
               사이트맵
             </Link>
           </nav>
-
-          {/* 하단 계정 바 — 세이프에어리어만큼 더 띄워 홈 인디케이터에 가리지 않게 한다. */}
-          <div className="flex shrink-0 items-center justify-between gap-3 border-t-2 border-[#c8a04a] bg-white px-5 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))] text-sm">
-            <span className="text-xs font-medium tracking-wider text-ink-muted">계정</span>
-            <div className="flex items-center gap-3">
-              <NotificationOptIn />
-              <AuthButtons />
-            </div>
-          </div>
         </div>
       </div>
     </>
