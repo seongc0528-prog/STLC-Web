@@ -1,15 +1,23 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import { NAV_SECTIONS } from '@/lib/nav'
 import { DrawerAccount } from '@/components/DrawerAccount'
 import { Logomark } from '@/components/icons'
+import { useClientValue } from '@/lib/useClientValue'
+
+/** 포털은 document.body 가 있어야 만들 수 있으니 서버 렌더에서는 접어둔다.
+ *  effect 대신 useClientValue 를 쓰는 건 하이드레이션 직후 렌더를 한 번 더
+ *  돌리지 않기 위해서다. */
+const onClient = () => true
 
 export function MobileNav() {
   // 드로어 안의 모든 Link는 onClick에서 직접 닫는다(effect로 pathname을 감시하면
   // react-hooks/set-state-in-effect에 걸린다).
   const [open, setOpen] = useState(false)
+  const mounted = useClientValue(onClient, false)
 
   // 드로어가 열려 있는 동안 배경 스크롤 잠금
   useEffect(() => {
@@ -30,27 +38,14 @@ export function MobileNav() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
-  return (
-    <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-label="전체 메뉴 열기"
-        aria-expanded={open}
-        className="flex size-10 items-center justify-center rounded-full border border-line text-ink transition hover:border-brand-600 hover:text-brand-600 lg:hidden"
-      >
-        <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round">
-          <path d="M4 7h16M4 12h16M4 17h16" />
-        </svg>
-      </button>
-
-      {/* 드로어는 항상 마운트해 두고 transform만 바꾼다 — 열고 닫을 때 모두 슬라이드된다. */}
-      <div
-        className={`fixed inset-0 z-[60] overflow-hidden lg:hidden ${
-          open ? '' : 'pointer-events-none'
-        }`}
-        aria-hidden={!open}
-      >
+  // 항상 마운트해 두고 transform만 바꾼다 — 열고 닫을 때 모두 슬라이드된다.
+  const overlay = (
+    <div
+      className={`fixed inset-0 z-[60] overflow-hidden lg:hidden ${
+        open ? '' : 'pointer-events-none'
+      }`}
+      aria-hidden={!open}
+    >
         <button
           type="button"
           tabIndex={open ? 0 : -1}
@@ -144,6 +139,27 @@ export function MobileNav() {
           </nav>
         </div>
       </div>
+  )
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label="전체 메뉴 열기"
+        aria-expanded={open}
+        className="flex size-10 items-center justify-center rounded-full border border-line text-ink transition hover:border-brand-600 hover:text-brand-600 lg:hidden"
+      >
+        <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+
+      {/* body 로 내보낸다. 헤더에 backdrop-blur 가 걸려 있어서 그 안에 두면
+          backdrop-filter 가 fixed 의 컨테이닝 블록이 되어버린다 — 드로어가
+          뷰포트가 아니라 헤더 바(높이 72px) 기준으로 잡히고, overflow-hidden 에
+          잘려 제목 줄만 남는다. */}
+      {mounted && createPortal(overlay, document.body)}
     </>
   )
 }
