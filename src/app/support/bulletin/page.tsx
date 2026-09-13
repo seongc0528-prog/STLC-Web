@@ -14,11 +14,10 @@ export default async function BulletinPage(props: PageProps<"/support/bulletin">
   const supabase = await createClient();
 
   const { data, count } = await supabase
-    .from("sermons")
-    .select("id, file_url, published_at", { count: "exact" })
+    .from("bulletins")
+    .select("id, file_url, sunday_date", { count: "exact" })
     .eq("is_active", true)
-    .not("file_url", "is", null)
-    .order("published_at", { ascending: false })
+    .order("sunday_date", { ascending: false })
     .range((page - 1) * BULLETIN_PAGE_SIZE, page * BULLETIN_PAGE_SIZE - 1);
 
   const bulletins = data ?? [];
@@ -35,7 +34,7 @@ export default async function BulletinPage(props: PageProps<"/support/bulletin">
         {bulletins.length > 0 ? (
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {bulletins.map((bulletin) => {
-              const label = bulletinLabel(bulletin.published_at);
+              const label = bulletinLabel(bulletin.sunday_date);
               return (
                 <li key={bulletin.id}>
                   <div className="card card-hover flex h-full flex-col overflow-hidden">

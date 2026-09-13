@@ -10,16 +10,15 @@ export default async function BulletinDetailPage(props: PageProps<"/support/bull
   const supabase = await createClient();
 
   const { data: bulletin } = await supabase
-    .from("sermons")
-    .select("id, file_url, published_at")
+    .from("bulletins")
+    .select("id, file_url, sunday_date")
     .eq("id", id)
     .eq("is_active", true)
-    .not("file_url", "is", null)
     .maybeSingle();
 
-  if (!bulletin?.file_url) notFound();
+  if (!bulletin) notFound();
 
-  const label = bulletinLabel(bulletin.published_at);
+  const label = bulletinLabel(bulletin.sunday_date);
 
   return (
     <main>
