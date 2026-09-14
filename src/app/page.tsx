@@ -266,7 +266,7 @@ export default async function Home() {
             {notices.map((notice) => (
               <li key={notice.id}>
                 <Link
-                  href="/support/news"
+                  href={`/support/news/${notice.id}`}
                   className="group flex items-center justify-between gap-6 py-5 transition"
                 >
                   <span className="flex min-w-0 items-center gap-4">
