@@ -4,6 +4,7 @@ import { todayInSydney, formatKoreanDate } from "@/lib/date";
 import { FOUNDED_YEAR } from "@/lib/church";
 import { Icon, type IconName } from "@/components/icons";
 import { SermonList } from "@/components/SermonList";
+import { HomePopup } from "@/components/HomePopup";
 
 const QUICK_LINKS: { icon: IconName; label: string; href: string }[] = [
   { icon: "user", label: "담임목사 소개", href: "/about/pastor" },
@@ -20,7 +21,7 @@ export default async function Home() {
   const supabase = await createClient();
   const date = todayInSydney();
 
-  const [{ data: church }, { data: verseData }, { data: sermons }, { data: notices }] =
+  const [{ data: church }, { data: verseData }, { data: sermons }, { data: notices }, { data: popups }] =
     await Promise.all([
       supabase.from("church_info").select("*").eq("id", 1).single(),
       supabase.rpc("daily_verse_for", { d: date }),
@@ -30,7 +31,6 @@ export default async function Home() {
         .eq("is_active", true)
         .order("published_at", { ascending: false })
         .limit(3),
-      // notices는 로그인 사용자만 조회 가능(RLS) — 비로그인일 땐 빈 배열이 와서 섹션이 숨겨진다
       supabase
         .from("notices")
         .select("id, title, created_at")
@@ -38,12 +38,23 @@ export default async function Home() {
         .order("pinned", { ascending: false })
         .order("created_at", { ascending: false })
         .limit(4),
+      // 게시 기간(시드니 날짜) 안의 홈 팝업
+      supabase
+        .from("popups")
+        .select("id, title, image_url, link_url")
+        .eq("is_active", true)
+        .lte("starts_on", date)
+        .or(`ends_on.is.null,ends_on.gte.${date}`)
+        .order("sort_order", { ascending: true })
+        .order("starts_on", { ascending: false }),
     ]);
 
   const verse = Array.isArray(verseData) ? verseData[0] : verseData;
 
   return (
     <main>
+      <HomePopup popups={popups ?? []} today={date} />
+
       {/* ================= 히어로 ================= */}
       <section className="relative overflow-hidden bg-brand-800">
         {/* 오프닝 동영상 삽입 위치 — <video> 를 이 자리에 absolute inset-0 object-cover 로 넣으면
@@ -238,13 +249,13 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ================= 교회 소식 (로그인 시 노출) ================= */}
+      {/* ================= 공지사항 (게시된 글이 있을 때만) ================= */}
       {notices && notices.length > 0 && (
         <section className="container-page py-20 md:py-24">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="eyebrow">Notice</p>
-              <h2 className="display rule mt-2 text-2xl md:text-3xl">교회 소식</h2>
+              <h2 className="display rule mt-2 text-2xl md:text-3xl">공지사항</h2>
             </div>
             <Link href="/support/news" className="btn btn-outline">
               전체 보기

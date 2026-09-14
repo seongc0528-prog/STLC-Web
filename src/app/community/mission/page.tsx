@@ -1,7 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
+import { requireUser } from "@/lib/auth";
 
 export default async function MissionNewsPage() {
-  const supabase = await createClient();
+  const { supabase } = await requireUser();
   const { data } = await supabase
     .from("mission_news")
     .select("*")

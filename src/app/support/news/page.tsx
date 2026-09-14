@@ -1,7 +1,7 @@
-import { requireUser } from "@/lib/auth";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function NewsPage() {
-  const { supabase } = await requireUser();
+  const supabase = await createClient();
   const { data } = await supabase
     .from("notices")
     .select("*")
@@ -11,7 +11,7 @@ export default async function NewsPage() {
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="mb-8 text-2xl font-semibold text-gray-900">교회 소식</h1>
+      <h1 className="mb-8 text-2xl font-semibold text-gray-900">공지사항</h1>
       <ul className="flex flex-col divide-y divide-gray-100">
         {data?.map((n) => (
           <li key={n.id} className="py-4">
