@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { uploadFile } from "@/lib/supabase/storage";
+import { downscaleImage } from "@/lib/downscaleImage";
 
 export function NewAlbumForm() {
   const [caption, setCaption] = useState("");
@@ -35,7 +36,8 @@ export function NewAlbumForm() {
 
       const urls: string[] = [];
       for (const file of Array.from(files)) {
-        const url = await uploadFile("member-uploads", file, userData.user.id);
+        // 섬네일은 보여 줄 때 Supabase 변환으로 만든다(src/lib/image.ts). 원본만 적당히 줄여 올린다.
+        const url = await uploadFile("member-uploads", await downscaleImage(file), userData.user.id);
         urls.push(url);
       }
 

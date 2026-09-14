@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/icons";
+import { resizedImage } from "@/lib/image";
 
-type Photo = { id: string; image_url: string; thumb_url: string | null };
+type Photo = { id: string; image_url: string };
 
 /** 앨범 사진 그리드 + 눌렀을 때 뜨는 전체화면 뷰어 (좌우 넘김·스와이프·키보드). */
 export function PhotoGallery({ photos, title }: { photos: Photo[]; title: string }) {
@@ -45,7 +46,7 @@ export function PhotoGallery({ photos, title }: { photos: Photo[]; title: string
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={p.thumb_url ?? p.image_url}
+                src={resizedImage(p.image_url, { width: 600, height: 600 })}
                 alt=""
                 loading="lazy"
                 className="size-full object-cover transition duration-500 group-hover:scale-105"
@@ -87,7 +88,7 @@ export function PhotoGallery({ photos, title }: { photos: Photo[]; title: string
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               key={photo.id}
-              src={photo.image_url}
+              src={resizedImage(photo.image_url, { width: 1600, height: 1600, resize: "contain", quality: 80 })}
               alt={`${title} 사진 ${current + 1}`}
               className="max-h-full max-w-full object-contain"
               onClick={(e) => e.stopPropagation()}

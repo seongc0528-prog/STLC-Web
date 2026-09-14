@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { NewAlbumForm } from "@/components/NewAlbumForm";
 import { Pagination, parsePage } from "@/components/Pagination";
 import { formatChurchDate } from "@/lib/date";
+import { resizedImage } from "@/lib/image";
 
 // 3열 x 4행 (모바일 2열 x 6행)
 const ALBUM_PAGE_SIZE = 12;
@@ -57,7 +58,7 @@ export default async function PhotosPage(props: PageProps<"/community/photos">) 
                       {album.cover_url && (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                          src={album.cover_url}
+                          src={resizedImage(album.cover_url, { width: 800, height: 600 })}
                           alt=""
                           loading="lazy"
                           className="size-full object-cover transition duration-500 group-hover:scale-105"

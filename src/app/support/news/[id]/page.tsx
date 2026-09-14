@@ -2,8 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
+import { PostComments } from "@/components/PostComments";
+import { ViewCount } from "@/components/ViewCount";
 import { Icon } from "@/components/icons";
 import { formatChurchDate } from "@/lib/date";
+import { loadPostExtras } from "@/lib/comments";
 
 type Neighbor = { id: string; title: string } | null;
 
@@ -20,7 +23,7 @@ export default async function NoticeDetailPage(props: PageProps<"/support/news/[
 
   const { data: notice } = await supabase
     .from("notices")
-    .select("id, title, content, attachment_url, pinned, created_at")
+    .select("id, title, content, attachment_url, author_id, pinned, views, created_at")
     .eq("id", id)
     .eq("is_active", true)
     .maybeSingle();
@@ -28,7 +31,7 @@ export default async function NoticeDetailPage(props: PageProps<"/support/news/[
   if (!notice) notFound();
 
   // 이전글 = 바로 전에 올라온 글, 다음글 = 바로 뒤에 올라온 글 (고정 여부와 무관하게 날짜순)
-  const [{ data: older }, { data: newer }] = await Promise.all([
+  const [{ data: older }, { data: newer }, extras] = await Promise.all([
     supabase
       .from("notices")
       .select("id, title")
@@ -45,6 +48,7 @@ export default async function NoticeDetailPage(props: PageProps<"/support/news/[
       .order("created_at", { ascending: true })
       .limit(1)
       .maybeSingle(),
+    loadPostExtras(supabase, "notice", notice.id, notice.author_id),
   ]);
 
   const content: string = notice.content ?? "";
@@ -79,7 +83,11 @@ export default async function NoticeDetailPage(props: PageProps<"/support/news/[
               <span className="rounded-full bg-brand-600 px-2 py-0.5 text-[0.6875rem] font-medium text-white">공지</span>
             )}
             <h2 className="display mt-2 text-xl leading-snug text-ink md:text-2xl">{notice.title}</h2>
-            <p className="mt-3 text-sm text-ink-muted">{formatChurchDate(notice.created_at)}</p>
+            <p className="mt-3 text-sm text-ink-muted">
+              {extras.signedIn && `${extras.authorName} · `}
+              {formatChurchDate(notice.created_at)} ·{" "}
+              <ViewCount kind="notice" id={notice.id} initialViews={notice.views} />
+            </p>
           </header>
 
           {paragraphs.length > 0 && (
@@ -114,6 +122,8 @@ export default async function NoticeDetailPage(props: PageProps<"/support/news/[
               {kind === "pdf" ? "첨부 PDF 열기" : "첨부파일 열기"}
             </a>
           )}
+
+          <PostComments kind="notice" targetId={notice.id} extras={extras} path={`/support/news/${notice.id}`} />
 
           <nav aria-label="이전글 다음글" className="mt-14 divide-y divide-line border-y border-line text-sm">
             {neighbors.map(({ label, post }) => (

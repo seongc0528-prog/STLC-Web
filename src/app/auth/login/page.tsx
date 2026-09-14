@@ -24,7 +24,9 @@ export default function LoginPage() {
       setError(error.message);
       return;
     }
-    router.push("/");
+    // "로그인하고 댓글 보기"처럼 ?next=/경로 로 들어왔으면 그 글로 돌려보낸다. 사이트 안 경로만.
+    const next = new URLSearchParams(window.location.search).get("next");
+    router.push(next?.startsWith("/") && !next.startsWith("//") ? next : "/");
     router.refresh();
   }
 

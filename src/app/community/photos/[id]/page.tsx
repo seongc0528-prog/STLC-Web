@@ -3,8 +3,11 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
 import { PhotoGallery } from "@/components/PhotoGallery";
+import { PostComments } from "@/components/PostComments";
+import { ViewCount } from "@/components/ViewCount";
 import { Icon } from "@/components/icons";
 import { formatChurchDate } from "@/lib/date";
+import { loadPostExtras } from "@/lib/comments";
 
 export default async function PhotoAlbumPage(props: PageProps<"/community/photos/[id]">) {
   const { id } = await props.params;
@@ -12,7 +15,7 @@ export default async function PhotoAlbumPage(props: PageProps<"/community/photos
 
   const { data: album } = await supabase
     .from("photo_albums")
-    .select("id, caption, created_at, photo_items(id, image_url, thumb_url, sort_order)")
+    .select("id, caption, author_id, views, created_at, photo_items(id, image_url, sort_order)")
     .eq("id", id)
     .eq("is_active", true)
     .order("sort_order", { referencedTable: "photo_items", ascending: true })
@@ -20,7 +23,8 @@ export default async function PhotoAlbumPage(props: PageProps<"/community/photos
 
   if (!album) notFound();
 
-  const photos: { id: string; image_url: string; thumb_url: string | null }[] = album.photo_items ?? [];
+  const photos: { id: string; image_url: string }[] = album.photo_items ?? [];
+  const extras = await loadPostExtras(supabase, "album", album.id, album.author_id);
 
   return (
     <main>
@@ -36,7 +40,9 @@ export default async function PhotoAlbumPage(props: PageProps<"/community/photos
             앨범 목록
           </Link>
           <p className="text-sm text-ink-muted">
-            {formatChurchDate(album.created_at)} · 사진 {photos.length}장
+            {extras.signedIn && `${extras.authorName} · `}
+            {formatChurchDate(album.created_at)} · 사진 {photos.length}장 ·{" "}
+            <ViewCount kind="album" id={album.id} initialViews={album.views} />
           </p>
         </div>
 
@@ -49,6 +55,10 @@ export default async function PhotoAlbumPage(props: PageProps<"/community/photos
             이 앨범에는 사진이 없습니다.
           </p>
         )}
+
+        <div className="mx-auto max-w-3xl">
+          <PostComments kind="album" targetId={album.id} extras={extras} path={`/community/photos/${album.id}`} />
+        </div>
       </div>
     </main>
   );
