@@ -57,8 +57,27 @@ export default async function Home() {
 
       {/* ================= 히어로 ================= */}
       <section className="relative overflow-hidden bg-brand-800">
-        {/* 오프닝 동영상 삽입 위치 — <video> 를 이 자리에 absolute inset-0 object-cover 로 넣으면
-            아래 그라데이션 오버레이가 그대로 가독성을 잡아준다. */}
+        {/* 오프닝 동영상 — 원본(src/assets/images/대문동영상.mp4)에서 음성을 빼고 압축해
+            public/videos 에 둔다. 자동재생은 muted + playsInline 이어야 브라우저·iOS 에서 막히지 않는다.
+            움직임 줄이기 설정 사용자에게는 영상 대신 첫 프레임(포스터)만 깔린다. */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(/videos/hero-poster.jpg)" }}
+        />
+        <video
+          aria-hidden
+          className="absolute inset-0 size-full object-cover motion-reduce:hidden"
+          src="/videos/hero.mp4"
+          poster="/videos/hero-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+        {/* 수채화 영상이 밝아서 흰 글씨가 묻힌다 — 딥그린을 덮어 가독성을 잡는다 */}
+        <div aria-hidden className="absolute inset-0 bg-brand-900/65" />
         <div
           aria-hidden
           className="absolute inset-0 opacity-70"
