@@ -76,25 +76,20 @@ export default async function Home() {
           playsInline
           preload="auto"
         />
-        {/* 수채화 영상이 밝아서 흰 글씨가 묻힌다 — 딥그린을 덮어 가독성을 잡는다 */}
-        <div aria-hidden className="absolute inset-0 bg-brand-900/65" />
+        {/* 영상은 원래 색 그대로 보이게 하고, 딥그린은 가장자리 테두리로만 남긴다.
+            흰 글씨의 가독성은 아래 본문에 준 검정 그림자가 맡는다 */}
         <div
           aria-hidden
-          className="absolute inset-0 opacity-70"
-          style={{
-            background:
-              "radial-gradient(60rem 40rem at 75% 15%, #2e7d32 0%, transparent 60%), radial-gradient(40rem 30rem at 10% 90%, #174d1a 0%, transparent 65%)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-brand-900/60 to-transparent"
+          className="absolute inset-0"
+          style={{ boxShadow: "inset 0 0 4rem 0.75rem rgb(23 77 26 / 0.85)" }}
         />
 
-        <div className="container-page relative flex min-h-[clamp(30rem,72vh,42rem)] flex-col justify-center py-24 text-center">
+        {/* text-shadow 는 상속되므로 여기 한 번 주면 제목·안내 문구·버튼 글씨에 모두 걸린다.
+            밝은 수채화 위에서도 글자가 뜨도록 가까운 진한 그림자와 넓게 퍼지는 그림자를 겹친다 */}
+        <div className="container-page relative flex min-h-[clamp(30rem,72vh,42rem)] flex-col justify-center py-24 text-center [text-shadow:0_1px_2px_rgb(0_0_0/0.9),0_2px_12px_rgb(0_0_0/0.7)]">
           {/* 좁은 화면에서는 "·" 자리에서 두 줄로 나누고 자간을 줄여 교회 이름이 한 줄에 들어가게 한다 —
               그대로 두면 "CHURCH / IN AUSTRALIA"처럼 이름 중간이 끊긴다 */}
-          <p className="eyebrow eyebrow-on-dark animate-rise max-sm:tracking-[0.16em]">
+          <p className="eyebrow animate-rise font-semibold text-white max-sm:tracking-[0.16em]">
             Since {FOUNDED_YEAR}
             <span className="hidden sm:inline"> · </span>
             <br className="sm:hidden" />
@@ -119,7 +114,7 @@ export default async function Home() {
 
           <p
             style={{ animationDelay: "160ms" }}
-            className="mx-auto mt-7 max-w-xl animate-rise break-keep text-sm leading-relaxed text-brand-100 sm:text-base"
+            className="mx-auto mt-7 max-w-xl animate-rise break-keep text-sm font-medium leading-relaxed text-white sm:text-base"
           >
             {/* 좁은 화면에서는 <br>이 숨어서 줄이 이어지므로 공백을 따로 넣는다 —
                 JSX는 줄 끝 공백을 지워 "곳,시드니"처럼 붙어 버린다 */}
@@ -130,7 +125,7 @@ export default async function Home() {
 
           <p
             style={{ animationDelay: "220ms" }}
-            className="mt-4 animate-rise font-serif text-xs tracking-widest text-brand-300"
+            className="mt-4 animate-rise font-serif text-xs font-semibold tracking-widest text-white"
           >
             요한복음 4장 24절
           </p>
