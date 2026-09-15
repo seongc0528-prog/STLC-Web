@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
+
+export const metadata: Metadata = {
+  title: "섬기는 사람들",
+  description: "시드니 주님의 교회를 섬기는 교역자와 직분자를 소개합니다.",
+};
 
 export default async function StaffPage() {
   const supabase = await createClient();

@@ -1,7 +1,14 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { todayInSydney, formatKoreanDate } from "@/lib/date";
-import { FOUNDED_YEAR } from "@/lib/church";
+import { FOUNDED_DATE, FOUNDED_YEAR } from "@/lib/church";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_NAME_EN,
+  SITE_URL,
+  YOUTUBE_CHANNEL_URL,
+} from "@/lib/site";
 import { Icon, type IconName } from "@/components/icons";
 import { SermonList } from "@/components/SermonList";
 import { HomePopup } from "@/components/HomePopup";
@@ -51,8 +58,53 @@ export default async function Home() {
 
   const verse = Array.isArray(verseData) ? verseData[0] : verseData;
 
+  // 구조화 데이터 — WebSite 는 구글 검색결과의 사이트 이름, Church 는 교회 정보(지식 패널)의 근거가 된다.
+  // sameAs 로 유튜브 채널이 이 홈페이지와 같은 교회라는 걸 알린다.
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: SITE_NAME,
+      alternateName: [SITE_NAME_EN, "시드니주님의교회", "STLC"],
+      url: `${SITE_URL}/`,
+      inLanguage: "ko-KR",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Church",
+      "@id": `${SITE_URL}/#church`,
+      name: SITE_NAME,
+      alternateName: SITE_NAME_EN,
+      url: `${SITE_URL}/`,
+      logo: `${SITE_URL}/icon-512.png`,
+      image: `${SITE_URL}/videos/hero-poster.jpg`,
+      description: SITE_DESCRIPTION,
+      foundingDate: FOUNDED_DATE,
+      sameAs: [YOUTUBE_CHANNEL_URL],
+      ...(church?.address && {
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: church.address_en ?? church.address,
+          addressLocality: "Sydney",
+          addressRegion: "NSW",
+          addressCountry: "AU",
+        },
+      }),
+      ...(church?.latitude != null &&
+        church?.longitude != null && {
+          geo: { "@type": "GeoCoordinates", latitude: church.latitude, longitude: church.longitude },
+        }),
+      ...(church?.phone && { telephone: church.phone }),
+      ...(church?.email && { email: church.email }),
+    },
+  ];
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <HomePopup popups={popups ?? []} today={date} />
 
       {/* ================= 히어로 ================= */}
@@ -259,9 +311,20 @@ export default async function Home() {
               <p className="eyebrow">Sermons</p>
               <h2 className="display rule mt-2 text-2xl md:text-3xl">최근 설교</h2>
             </div>
-            <Link href="/tv/sunday" className="btn btn-outline">
-              전체 보기
-            </Link>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={YOUTUBE_CHANNEL_URL}
+                target="_blank"
+                rel="noopener"
+                className="btn btn-outline inline-flex items-center gap-2"
+              >
+                <Icon name="play" className="size-4" />
+                유튜브 채널
+              </a>
+              <Link href="/tv/sunday" className="btn btn-outline">
+                전체 보기
+              </Link>
+            </div>
           </div>
 
           <div className="mt-10">

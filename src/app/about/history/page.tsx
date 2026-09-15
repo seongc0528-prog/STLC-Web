@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
+
+export const metadata: Metadata = {
+  title: "교회 연혁",
+  description: "2009년 창립한 시드니 주님의 교회가 걸어온 길입니다.",
+};
 
 export default async function HistoryPage() {
   const supabase = await createClient();

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_NAME_EN, SITE_URL } from "@/lib/site";
 
 const notoSansKr = Noto_Sans_KR({
   variable: "--font-noto-sans-kr",
@@ -27,8 +28,36 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Sydney The Lord's Church in Australia",
-  description: "시드니 주님의 교회 (Sydney The Lord's Church in Australia) 공식 홈페이지",
+  metadataBase: new URL(SITE_URL),
+  // 페이지가 title 만 주면 "담임목사 소개 | 시드니 주님의 교회" 가 된다.
+  // 홈(default)에는 한글·영문 이름을 모두 넣어 어느 쪽으로 검색해도 제목에 걸리게 한다.
+  title: {
+    default: `${SITE_NAME} | ${SITE_NAME_EN}`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    SITE_NAME,
+    "시드니주님의교회",
+    SITE_NAME_EN,
+    "Sydney The Lord's Church",
+    "시드니 한인교회",
+    "시드니 교회",
+    "호주 한인교회",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    siteName: SITE_NAME,
+    // og:title·og:description 은 일부러 비워 둔다 — 여기 고정하면 모든 하위 페이지가 홈 제목으로
+    // 공유된다. 비어 있으면 카카오톡·페이스북 미리보기가 페이지마다의 <title>·description 을 쓴다.
+    images: [{ url: "/videos/hero-poster.jpg", width: 1280, height: 720, alt: SITE_NAME }],
+  },
+  // 구글 서치 콘솔 "HTML 태그" 소유권 확인 값. Vercel 환경변수로 넣는다.
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
   manifest: "/manifest.webmanifest",
   icons: {
     icon: "/icon.svg",

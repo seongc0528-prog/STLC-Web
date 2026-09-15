@@ -4,6 +4,12 @@ import { PageHero } from "@/components/PageHero";
 import { Icon } from "@/components/icons";
 import { SENIOR_PASTOR, type CareerEntry } from "@/lib/pastor";
 import pastorPhoto from "@/assets/images/담임목사.jpg";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "담임목사 소개",
+  description: "시드니 주님의 교회 담임목사님의 인사말과 약력을 소개합니다.",
+};
 
 /** 빈 줄로 나뉜 본문을 문단 배열로. DB의 bio를 인사말로 쓸 때 사용한다. */
 function toParagraphs(text: string | null | undefined) {

@@ -5,6 +5,7 @@ import { AuthButtons } from '@/components/AuthButtons'
 import { MobileNav } from '@/components/MobileNav'
 import { Logomark } from '@/components/icons'
 import { createClient } from '@/lib/supabase/server'
+import { YOUTUBE_CHANNEL_URL } from '@/lib/site'
 
 export async function Header() {
   // 상단바 예배 시간은 church_info 단일 소스에서 읽는다(홈/푸터와 어긋나지 않도록).
@@ -36,6 +37,14 @@ export async function Header() {
             )}
           </p>
           <div className="flex items-center gap-4">
+            <a
+              href={YOUTUBE_CHANNEL_URL}
+              target="_blank"
+              rel="noopener"
+              className="text-brand-200 transition hover:text-white"
+            >
+              유튜브
+            </a>
             <Link href="/daily-verse" className="text-brand-200 transition hover:text-white">
               오늘의 말씀
             </Link>

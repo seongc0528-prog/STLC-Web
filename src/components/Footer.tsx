@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { FOUNDED_LABEL } from '@/lib/church'
-import { Logomark } from '@/components/icons'
+import { Icon, Logomark } from '@/components/icons'
+import { YOUTUBE_CHANNEL_URL } from '@/lib/site'
 import { FooterBody } from '@/components/FooterBody'
 
 export async function Footer() {
@@ -65,9 +66,20 @@ export async function Footer() {
           )}
         </dl>
 
-        <Link href="/about/location" className="btn btn-ghost-light mt-7">
-          오시는 길
-        </Link>
+        <div className="mt-7 flex flex-wrap gap-3">
+          <Link href="/about/location" className="btn btn-ghost-light">
+            오시는 길
+          </Link>
+          <a
+            href={YOUTUBE_CHANNEL_URL}
+            target="_blank"
+            rel="noopener"
+            className="btn btn-ghost-light inline-flex items-center gap-2"
+          >
+            <Icon name="play" className="size-4" />
+            유튜브 채널
+          </a>
+        </div>
       </div>
     </FooterBody>
   )

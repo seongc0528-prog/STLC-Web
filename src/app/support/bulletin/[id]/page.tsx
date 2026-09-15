@@ -4,6 +4,21 @@ import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
 import { bulletinLabel, downloadUrl } from "@/lib/bulletin";
 import { Icon } from "@/components/icons";
+import type { Metadata } from "next";
+
+export async function generateMetadata(
+  props: PageProps<"/support/bulletin/[id]">,
+): Promise<Metadata> {
+  const { id } = await props.params;
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("bulletins")
+    .select("sunday_date")
+    .eq("id", id)
+    .eq("is_active", true)
+    .maybeSingle();
+  return { title: data ? bulletinLabel(data.sunday_date) : "주보" };
+}
 
 export default async function BulletinDetailPage(props: PageProps<"/support/bulletin/[id]">) {
   const { id } = await props.params;

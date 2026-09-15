@@ -5,6 +5,12 @@ import { PdfThumbnail } from "@/components/PdfThumbnail";
 import { Pagination, parsePage } from "@/components/Pagination";
 import { bulletinLabel, downloadUrl } from "@/lib/bulletin";
 import { Icon } from "@/components/icons";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "주보",
+  description: "시드니 주님의 교회 주일 주보를 미리 보고 PDF로 내려받을 수 있습니다.",
+};
 
 // 카드마다 PDF 1페이지를 실제로 렌더링하므로 설교 목록(10)보다 적게 끊는다 (3열 x 3행)
 const BULLETIN_PAGE_SIZE = 9;

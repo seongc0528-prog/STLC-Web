@@ -5,6 +5,12 @@ import { NewAlbumForm } from "@/components/NewAlbumForm";
 import { Pagination, parsePage } from "@/components/Pagination";
 import { formatChurchDate } from "@/lib/date";
 import { resizedImage } from "@/lib/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "행사 사진",
+  description: "시드니 주님의 교회의 예배와 행사, 함께한 순간들을 사진으로 나눕니다.",
+};
 
 // 3열 x 4행 (모바일 2열 x 6행)
 const ALBUM_PAGE_SIZE = 12;

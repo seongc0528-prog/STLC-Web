@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
+
+export const metadata: Metadata = {
+  title: "찬양",
+  description: "시드니 주님의 교회 찬양 영상입니다.",
+};
 
 export default async function PraisePage() {
   const supabase = await createClient();

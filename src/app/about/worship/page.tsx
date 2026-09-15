@@ -2,6 +2,12 @@ import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
 import { Icon } from "@/components/icons";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "예배 안내",
+  description: "시드니 주님의 교회 주일 예배와 수요 예배 시간, 장소를 안내합니다.",
+};
 
 export default async function WorshipPage() {
   const supabase = await createClient();

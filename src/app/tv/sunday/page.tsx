@@ -2,6 +2,12 @@ import { createClient } from "@/lib/supabase/server";
 import { SermonList } from "@/components/SermonList";
 import { PageHero } from "@/components/PageHero";
 import { Pagination, PAGE_SIZE, parsePage } from "@/components/Pagination";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "주일 설교",
+  description: "시드니 주님의 교회 주일 예배 설교 영상과 설교 전문입니다.",
+};
 
 export default async function SundaySermonPage(props: PageProps<"/tv/sunday">) {
   const page = parsePage((await props.searchParams).page);

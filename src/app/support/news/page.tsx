@@ -4,6 +4,12 @@ import { PageHero } from "@/components/PageHero";
 import { Pagination, PAGE_SIZE, parsePage } from "@/components/Pagination";
 import { Icon } from "@/components/icons";
 import { formatChurchDate } from "@/lib/date";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "공지사항",
+  description: "시드니 주님의 교회 소식과 안내를 전해 드립니다.",
+};
 
 export default async function NewsPage(props: PageProps<"/support/news">) {
   const page = parsePage((await props.searchParams).page);

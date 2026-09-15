@@ -8,6 +8,26 @@ import { ViewCount } from "@/components/ViewCount";
 import { Icon } from "@/components/icons";
 import { formatChurchDate } from "@/lib/date";
 import { loadPostExtras } from "@/lib/comments";
+import type { Metadata } from "next";
+
+export async function generateMetadata(
+  props: PageProps<"/community/photos/[id]">,
+): Promise<Metadata> {
+  const { id } = await props.params;
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("photo_albums")
+    .select("caption, cover_url")
+    .eq("id", id)
+    .eq("is_active", true)
+    .maybeSingle();
+  if (!data) return { title: "행사 사진" };
+  return {
+    title: data.caption,
+    description: `시드니 주님의 교회 행사 사진 — ${data.caption}`,
+    ...(data.cover_url && { openGraph: { images: [data.cover_url] } }),
+  };
+}
 
 export default async function PhotoAlbumPage(props: PageProps<"/community/photos/[id]">) {
   const { id } = await props.params;

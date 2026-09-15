@@ -3,9 +3,36 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
 import { Icon } from "@/components/icons";
-import { youtubeId } from "@/lib/youtube";
+import { youtubeId, youtubeThumbnail } from "@/lib/youtube";
 import { scriptureSearchUrl } from "@/lib/scripture";
 import { formatChurchDate } from "@/lib/date";
+import type { Metadata } from "next";
+
+/** 설교 상세 두 라우트(주일/수요)가 generateMetadata 에서 같이 쓴다. */
+export async function sermonMetadata(
+  id: string,
+  serviceType: "sunday" | "wednesday",
+): Promise<Metadata> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("sermons")
+    .select("title, preacher, scripture, summary, video_url")
+    .eq("id", id)
+    .eq("service_type", serviceType)
+    .eq("is_active", true)
+    .maybeSingle();
+  if (!data) return { title: serviceType === "sunday" ? "주일 설교" : "수요 예배" };
+
+  const summary: string = data.summary ?? "";
+  const lead = [data.scripture, data.preacher].filter(Boolean).join(" · ");
+  const body = summary.replace(/\s+/g, " ").trim().slice(0, 120);
+  const thumbnail = youtubeThumbnail(data.video_url);
+  return {
+    title: data.title,
+    description: [lead, body].filter(Boolean).join(" — ") || undefined,
+    ...(thumbnail && { openGraph: { images: [thumbnail] } }),
+  };
+}
 
 /**
  * 설교 전문 화면. 주일/수요 두 라우트가 공유한다.

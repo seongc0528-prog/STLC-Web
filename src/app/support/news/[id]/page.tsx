@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
@@ -15,6 +16,25 @@ function attachmentKind(url: string) {
   if (ext && ["jpg", "jpeg", "png", "gif", "webp"].includes(ext)) return "image";
   if (ext === "pdf") return "pdf";
   return "file";
+}
+
+export async function generateMetadata(
+  props: PageProps<"/support/news/[id]">,
+): Promise<Metadata> {
+  const { id } = await props.params;
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("notices")
+    .select("title, content")
+    .eq("id", id)
+    .eq("is_active", true)
+    .maybeSingle();
+  if (!data) return { title: "공지사항" };
+  const content: string = data.content ?? "";
+  return {
+    title: data.title,
+    description: content.replace(/\s+/g, " ").trim().slice(0, 150) || undefined,
+  };
 }
 
 export default async function NoticeDetailPage(props: PageProps<"/support/news/[id]">) {

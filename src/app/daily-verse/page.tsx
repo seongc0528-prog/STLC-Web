@@ -2,6 +2,12 @@ import { createClient } from "@/lib/supabase/server";
 import { todayInSydney, formatKoreanDate } from "@/lib/date";
 import { PageHero } from "@/components/PageHero";
 import { Icon } from "@/components/icons";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "오늘의 말씀",
+  description: "시드니 주님의 교회가 매일 아침 전하는 오늘의 말씀입니다.",
+};
 
 export default async function DailyVersePage() {
   const supabase = await createClient();

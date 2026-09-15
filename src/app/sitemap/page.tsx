@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { NAV_SECTIONS } from "@/lib/nav";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "사이트맵" };
 
 export default function SitemapPage() {
   return (

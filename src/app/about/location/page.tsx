@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
+
+export const metadata: Metadata = {
+  title: "오시는 길",
+  description: "시드니 주님의 교회 주소와 찾아오시는 길, 연락처를 안내합니다.",
+};
 
 export default async function LocationPage() {
   const supabase = await createClient();
