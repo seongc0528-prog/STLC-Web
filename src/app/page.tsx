@@ -194,6 +194,31 @@ export default async function Home() {
             </Link>
           </div>
         </div>
+
+        {/* 유튜브 채널 바로가기 — 가운데 문구·버튼과 시선을 다투지 않게 영상 왼쪽 아래 구석에 둔다.
+            좁은 화면에서는 한쪽으로 치우치면 어색해서 가운데로 옮긴다.
+            위 본문의 text-shadow 밖이라 반투명 유리 배경 위 글씨가 번지지 않는다 */}
+        <div className="container-page pointer-events-none absolute inset-x-0 bottom-6 flex justify-center sm:bottom-8 sm:justify-start">
+          <a
+            href={YOUTUBE_CHANNEL_URL}
+            target="_blank"
+            rel="noopener"
+            aria-label="유튜브 채널 바로가기 (새 창에서 열림)"
+            style={{ animationDelay: "380ms" }}
+            className="group pointer-events-auto inline-flex animate-rise items-center gap-3 rounded-full border border-white/20 bg-black/40 py-2 pl-2.5 pr-4 text-sm font-medium text-white shadow-lg backdrop-blur-md transition hover:-translate-y-0.5 hover:border-white/40 hover:bg-black/55"
+          >
+            {/* 유튜브 로고 마크 — 브랜드 색(#FF0000)은 바꾸지 않는다 */}
+            <svg viewBox="0 0 28 20" aria-hidden="true" className="h-5 w-7 shrink-0">
+              <rect width="28" height="20" rx="5" fill="#FF0000" />
+              <path d="M11.5 5.5v9l7.5-4.5z" fill="#fff" />
+            </svg>
+            유튜브 채널 바로가기
+            <Icon
+              name="arrowRight"
+              className="size-4 -rotate-45 opacity-80 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
+            />
+          </a>
+        </div>
       </section>
 
       {/* ================= 퀵메뉴 ================= */}
