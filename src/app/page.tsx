@@ -92,8 +92,13 @@ export default async function Home() {
         />
 
         <div className="container-page relative flex min-h-[clamp(30rem,72vh,42rem)] flex-col justify-center py-24 text-center">
-          <p className="eyebrow eyebrow-on-dark animate-rise">
-            Since {FOUNDED_YEAR} · Sydney The Lord&apos;s Church in Australia
+          {/* 좁은 화면에서는 "·" 자리에서 두 줄로 나누고 자간을 줄여 교회 이름이 한 줄에 들어가게 한다 —
+              그대로 두면 "CHURCH / IN AUSTRALIA"처럼 이름 중간이 끊긴다 */}
+          <p className="eyebrow eyebrow-on-dark animate-rise max-sm:tracking-[0.16em]">
+            Since {FOUNDED_YEAR}
+            <span className="hidden sm:inline"> · </span>
+            <br className="sm:hidden" />
+            Sydney The Lord&apos;s Church in Australia
           </p>
 
           <h1
@@ -114,9 +119,11 @@ export default async function Home() {
 
           <p
             style={{ animationDelay: "160ms" }}
-            className="mx-auto mt-7 max-w-xl animate-rise text-sm leading-relaxed text-brand-100 sm:text-base"
+            className="mx-auto mt-7 max-w-xl animate-rise break-keep text-sm leading-relaxed text-brand-100 sm:text-base"
           >
-            누구든지 처음 오신 분도 편안하게 예배드릴 수 있는 곳,
+            {/* 좁은 화면에서는 <br>이 숨어서 줄이 이어지므로 공백을 따로 넣는다 —
+                JSX는 줄 끝 공백을 지워 "곳,시드니"처럼 붙어 버린다 */}
+            누구든지 처음 오신 분도 편안하게 예배드릴 수 있는 곳,{" "}
             <br className="hidden sm:block" />
             시드니 주님의 교회에 오신 것을 환영합니다.
           </p>
