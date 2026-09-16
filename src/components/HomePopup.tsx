@@ -133,6 +133,11 @@ export function HomePopup({ popups, today }: { popups: Popup[]; today: string })
           )}
         </div>
 
+        {/* 버튼 한 줄과 같은 높이로 두어, 링크가 없는 팝업이라도 아래 버튼 위치가 흔들리지 않는다. */}
+        <div className="flex min-h-[3rem] items-center justify-center px-4 text-center text-xs text-ink-muted">
+          {link ? "이미지를 클릭하시면 해당 페이지로 이동합니다." : null}
+        </div>
+
         <div className="flex divide-x divide-line border-t border-line text-sm">
           <button type="button" onClick={hideToday} className="flex-1 py-3.5 text-ink-muted transition hover:bg-brand-50">
             오늘 하루 보지 않기
