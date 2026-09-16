@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { requireUser } from "@/lib/auth";
 import { PageHero } from "@/components/PageHero";
 import { NewAlbumForm } from "@/components/NewAlbumForm";
 import { Pagination, parsePage } from "@/components/Pagination";
@@ -15,20 +15,17 @@ export const metadata: Metadata = {
 // 3열 x 4행 (모바일 2열 x 6행)
 const ALBUM_PAGE_SIZE = 12;
 
-// 보기는 누구나, 앨범 올리기는 로그인한 성도만.
+// 성도들의 얼굴이 담긴 사진이라 보기도 올리기도 로그인한 성도만.
 export default async function PhotosPage(props: PageProps<"/community/photos">) {
   const page = parsePage((await props.searchParams).page);
-  const supabase = await createClient();
+  const { supabase } = await requireUser();
 
-  const [{ data: userData }, { data, count }] = await Promise.all([
-    supabase.auth.getUser(),
-    supabase
-      .from("photo_albums")
-      .select("id, caption, cover_url, created_at, photo_items(count)", { count: "exact" })
-      .eq("is_active", true)
-      .order("created_at", { ascending: false })
-      .range((page - 1) * ALBUM_PAGE_SIZE, page * ALBUM_PAGE_SIZE - 1),
-  ]);
+  const { data, count } = await supabase
+    .from("photo_albums")
+    .select("id, caption, cover_url, created_at, photo_items(count)", { count: "exact" })
+    .eq("is_active", true)
+    .order("created_at", { ascending: false })
+    .range((page - 1) * ALBUM_PAGE_SIZE, page * ALBUM_PAGE_SIZE - 1);
 
   const albums = data ?? [];
 
@@ -41,14 +38,12 @@ export default async function PhotosPage(props: PageProps<"/community/photos">) 
       />
 
       <div className="container-page py-16">
-        {userData.user && (
-          <details className="mb-10 rounded-card border border-line bg-white px-5 py-4">
-            <summary className="cursor-pointer text-sm font-medium text-brand-600">+ 앨범 올리기</summary>
-            <div className="mt-4">
-              <NewAlbumForm />
-            </div>
-          </details>
-        )}
+        <details className="mb-10 rounded-card border border-line bg-white px-5 py-4">
+          <summary className="cursor-pointer text-sm font-medium text-brand-600">+ 앨범 올리기</summary>
+          <div className="mt-4">
+            <NewAlbumForm />
+          </div>
+        </details>
 
         {albums.length > 0 ? (
           <ul className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">

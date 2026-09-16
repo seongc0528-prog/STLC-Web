@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { requireUser } from "@/lib/auth";
 import { PageHero } from "@/components/PageHero";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { PostComments } from "@/components/PostComments";
@@ -17,21 +18,20 @@ export async function generateMetadata(
   const supabase = await createClient();
   const { data } = await supabase
     .from("photo_albums")
-    .select("caption, cover_url")
+    .select("caption")
     .eq("id", id)
     .eq("is_active", true)
     .maybeSingle();
+  // 로그인해야 보이는 사진이라, 비로그인(검색봇·링크 미리보기 포함)에는 앨범 정보가 오지 않는다.
+  // 사진이 링크 미리보기로 새어나가지 않도록 커버 이미지도 넣지 않는다.
   if (!data) return { title: "행사 사진" };
-  return {
-    title: data.caption,
-    description: `시드니 주님의 교회 행사 사진 — ${data.caption}`,
-    ...(data.cover_url && { openGraph: { images: [data.cover_url] } }),
-  };
+  return { title: data.caption };
 }
 
+// 성도들의 얼굴이 담긴 사진이라 로그인한 성도만 본다.
 export default async function PhotoAlbumPage(props: PageProps<"/community/photos/[id]">) {
   const { id } = await props.params;
-  const supabase = await createClient();
+  const { supabase } = await requireUser();
 
   const { data: album } = await supabase
     .from("photo_albums")

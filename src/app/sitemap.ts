@@ -28,13 +28,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   );
 
-  const [{ data: sermons }, { data: notices }, { data: albums }, { data: bulletins }] =
-    await Promise.all([
-      supabase.from("sermons").select("id, service_type, published_at").eq("is_active", true),
-      supabase.from("notices").select("id, created_at").eq("is_active", true),
-      supabase.from("photo_albums").select("id, created_at").eq("is_active", true),
-      supabase.from("bulletins").select("id, sunday_date").eq("is_active", true),
-    ]);
+  // 행사 사진은 로그인해야 보이므로 앨범은 넣지 않는다.
+  const [{ data: sermons }, { data: notices }, { data: bulletins }] = await Promise.all([
+    supabase.from("sermons").select("id, service_type, published_at").eq("is_active", true),
+    supabase.from("notices").select("id, created_at").eq("is_active", true),
+    supabase.from("bulletins").select("id, sunday_date").eq("is_active", true),
+  ]);
 
   const entries = (
     rows: Record<string, string>[] | null,
@@ -56,7 +55,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       "published_at",
     ),
     ...entries(notices, (n) => `/support/news/${n.id}`, "created_at"),
-    ...entries(albums, (a) => `/community/photos/${a.id}`, "created_at"),
     ...entries(bulletins, (b) => `/support/bulletin/${b.id}`, "sunday_date"),
   ];
 }
