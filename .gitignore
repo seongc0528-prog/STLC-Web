@@ -54,3 +54,6 @@ next-env.d.ts
 
 # Supabase CLI local state
 supabase/.temp/
+
+# 일괄 삭제 스크립트가 지우기 전에 떠 두는 백업 — 성도 댓글이 들어 있어 커밋하지 않는다.
+scripts/backups/

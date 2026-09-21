@@ -29,7 +29,7 @@ export const NAV_SECTIONS: NavSection[] = [
     items: [
       { label: '주일 설교', labelEn: 'Sunday Sermon', href: '/tv/sunday' },
       { label: '수요 예배', labelEn: 'Wednesday Service', href: '/tv/wednesday' },
-      { label: '찬양', labelEn: 'Praise', href: '/tv/praise' },
+      { label: '찬양 콘티', labelEn: 'Praise Setlist', href: '/tv/praise' },
     ],
   },
   // 누구나 보는 메뉴와 로그인한 성도만 보는 메뉴를 섹션 단위로 나눈다.
@@ -55,8 +55,9 @@ export const NAV_SECTIONS: NavSection[] = [
       { label: '온라인 헌금', labelEn: 'Online Giving', href: '/support/donate', requiresAuth: true },
     ],
   },
+  // 교육 신청은 홈페이지에서 받지 않는다 — 교육별 자료를 내려받는 자리로 쓴다.
   {
-    label: '교육 신청',
+    label: '교육 자료',
     labelEn: 'Education',
     items: [
       { label: '직분자 제자훈련', labelEn: 'Officer Training', href: '/education/officer', requiresAuth: true },

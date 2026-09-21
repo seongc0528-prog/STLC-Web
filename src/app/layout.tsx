@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { VisitLogger } from "@/components/VisitLogger";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_NAME_EN, SITE_URL } from "@/lib/site";
 
 const notoSansKr = Noto_Sans_KR({
@@ -104,6 +105,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           }}
         />
         <InstallPrompt />
+        <VisitLogger />
         <Header />
         <div className="flex-1">{children}</div>
         <Footer />

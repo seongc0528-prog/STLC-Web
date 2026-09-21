@@ -3,7 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
 import { PdfThumbnail } from "@/components/PdfThumbnail";
 import { Pagination, parsePage } from "@/components/Pagination";
-import { bulletinLabel, downloadUrl } from "@/lib/bulletin";
+import { bulletinLabel } from "@/lib/bulletin";
+import { downloadUrl } from "@/lib/files";
 import { Icon } from "@/components/icons";
 import type { Metadata } from "next";
 

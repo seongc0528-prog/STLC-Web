@@ -2,7 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { PageHero } from "@/components/PageHero";
-import { bulletinLabel, downloadUrl } from "@/lib/bulletin";
+import { bulletinLabel } from "@/lib/bulletin";
+import { downloadUrl } from "@/lib/files";
 import { Icon } from "@/components/icons";
 import type { Metadata } from "next";
 

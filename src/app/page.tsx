@@ -17,7 +17,7 @@ const QUICK_LINKS: { icon: IconName; label: string; href: string }[] = [
   { icon: "user", label: "담임목사 소개", href: "/about/pastor" },
   { icon: "clock", label: "예배 안내", href: "/about/worship" },
   { icon: "play", label: "주일 설교", href: "/tv/sunday" },
-  { icon: "music", label: "찬양", href: "/tv/praise" },
+  { icon: "music", label: "찬양 콘티", href: "/tv/praise" },
   { icon: "document", label: "주보", href: "/support/bulletin" },
   { icon: "image", label: "행사 사진", href: "/community/photos" },
   { icon: "heart", label: "온라인 헌금", href: "/support/donate" },
